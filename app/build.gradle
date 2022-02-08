@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+import com.example.bui.Libs
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.example.hogotest"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+
+
+    // Set both the Java and Kotlin compilers to target Java 8.
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion '1.4.0'
+        kotlinCompilerExtensionVersion '1.0.0-alpha05'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.AndroidX.coreKtx
+    implementation Libs.Coroutines.core
+    implementation Libs.AndroidX.appcompat
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'luyao.util.ktx:AndroidUtilKTX:0.0.5'
+    implementation 'com.blankj:utilcodex:1.30.5'
+
+
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.ui:ui-tooling:+'
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation 'androidx.compose.foundation:foundation:+'
+    // Material Design
+    implementation 'androidx.compose.material:material:+'
+    // Material design icons
+    implementation 'androidx.compose.material:material-icons-core:+'
+    implementation 'androidx.compose.material:material-icons-extended:+'
+    // Integration with observables
+    implementation 'androidx.compose.runtime:runtime-livedata:+'
+    implementation 'androidx.compose.runtime:runtime-rxjava2:+'
+
+
+
+    /*implementation(project(':flutter'),{
+        exclude group: 'com.android.support'
+    })*/
+
+}
