@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by Ping Wang on 11/9/20 11:41 AM
+  -->
+
+<network-security-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">amazonaws.com</domain>
+        <domain includeSubdomains="true">planetart.com</domain>
+        <domain includeSubdomains="true">freeprintsapp.in</domain>
+        <domain includeSubdomains="true">freeprintsapp.co.uk</domain>
+        <domain includeSubdomains="true">photoaffections.com</domain>
+        <domain includeSubdomains="true">freeprintsapp.com</domain>
+    </domain-config>
+</network-security-config>

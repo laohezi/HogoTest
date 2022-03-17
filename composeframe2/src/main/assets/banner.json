@@ -1,0 +1,108 @@
+{
+  "normal": [
+    {
+      "type": "text",
+      "content": "ADD A FRAME TO SHOWCASE",
+      "font": "FjallaOne-Regular.ttf",
+      "size": 75,
+      "spacing": 0.05,
+      "color": "#FFFFFF",
+      "line_height": 0,
+      "top_padding":"30"
+
+
+    },
+    {
+      "type": "text",
+      "content": "YOUR FAVORITE PHOTOS",
+      "font": "FjallaOne-Regular.ttf",
+      "size": 75,
+      "spacing": 0.05,
+      "color": "#FFFFFF",
+      "top_margin": 5,
+      "line_height": 0
+    },
+    {
+      "type": "text",
+      "content": "Your framed photos are free!",
+      "font": "Montserrat-Medium.ttf",
+      "size": 45,
+      "spacing": 0.03,
+      "color": "#FFFFFF",
+      "top_margin": 10,
+      "line_height": 0,
+      "bottom_padding":"24"
+    }
+  ],
+  "ipad": [
+    {
+      "type": "text",
+      "content": "ADD A FRAME TO SHOWCASE",
+      "font": "FjallaOne-Regular.ttf",
+      "size": 100,
+      "spacing": 0.05,
+      "color": "#FFFFFF",
+      "line_height": 0,
+      "top_padding":40
+    },
+    {
+      "type": "text",
+      "content": "YOUR FAVORITE PHOTOS",
+      "font": "FjallaOne-Regular.ttf",
+      "size": 100,
+      "spacing": 0.05,
+      "color": "#FFFFFF",
+      "top_margin": 5,
+      "line_height": 0
+    },
+    {
+      "type": "text",
+      "content": "Your framed photos are free!",
+      "font": "Montserrat-Medium.ttf",
+      "size": 60,
+      "spacing": 0.03,
+      "color": "#FFFFFF",
+      "top_margin": 10,
+      "line_height": 0,
+      "bottom_margin":10,
+      "bottom_padding":25
+    }
+  ],
+  "s8": [
+    {
+      "type": "text",
+      "content": "ADD A FRAME TO SHOWCASE",
+      "font": "FjallaOne-Regular.ttf",
+      "size": 100,
+      "spacing": 0.05,
+      "color": "#FFFFFF",
+      "line_height": 0,
+      "top_padding":100
+    },
+    {
+      "type": "text",
+      "content": "YOUR FAVORITE PHOTOS",
+      "font": "FjallaOne-Regular.ttf",
+      "size": 100,
+      "spacing": 0.05,
+      "color": "#FFFFFF",
+      "top_margin": 5,
+      "line_height": 0
+    },
+    {
+      "type": "text",
+      "content": "Your framed photos are free!",
+      "font": "Montserrat-Medium.ttf",
+      "size": 60,
+      "spacing": 0.03,
+      "color": "#FFFFFF",
+      "top_margin": 10,
+      "line_height": 0,
+      "bottom_margin":10,
+      "bottom_padding":25
+    }
+  ],
+  "background": {
+    "color": "#454545"
+  }
+}

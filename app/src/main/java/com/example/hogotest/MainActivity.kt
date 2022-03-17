@@ -11,17 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.Dp
-import androidx.ui.tooling.preview.Preview
-import com.blankj.utilcode.util.CloneUtils
-import com.blankj.utilcode.util.IntentUtils
-import io.flutter.view.FlutterView
+
+
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,26 +24,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-    @Preview
-    @Composable
-    fun getText(){
-
-        return ConstraintLayout(
-         constraintSet = ConstraintSet {
-
-         }
-
-        ) {
-
-
-          Text(text = "lalala",
-              modifier = Modifier.testTag("text1")
-          )
-
-        }
-    }
-
 
 }
 

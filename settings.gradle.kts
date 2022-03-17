@@ -1,4 +1,5 @@
-include ':app'
+include (":app")
+include (":composeframe2")
 rootProject.name = "HogoTest"
 
 /*
