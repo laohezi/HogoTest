@@ -5,7 +5,7 @@ object JetPacks{
 
     object Compose {
         const val snapshot = ""
-        const val version = "1.1.0-rc03"
+        const val version = "1.1.1"
 
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val animation = "androidx.compose.animation:animation:$version"
@@ -90,4 +90,8 @@ object Coroutines {
     const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
     const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
     const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+}
+
+object Junit{
+
 }

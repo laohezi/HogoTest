@@ -8,12 +8,12 @@ plugins {
 
 
 android {
-    buildToolsVersion= "3.0.2"
-    compileSdk = 31
+    buildToolsVersion= "32"
+    compileSdk = 32
     defaultConfig {
         applicationId = "com.example.jetnews1"
         minSdk= 21
-        targetSdk =31
+        targetSdk =32
         versionCode =1
         versionName ="1.0"
         vectorDrawables.useSupportLibrary = true
@@ -94,11 +94,13 @@ dependencies {
     implementation ("androidx.legacy:legacy-support-v4:1.0.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.window:window:1.0.0-beta03")
+    testImplementation("junit:junit:4.12")
 
     androidTestImplementation ("androidx.test:rules:1.4.0")
     androidTestImplementation ("androidx.test:runner:1.4.0")
     androidTestImplementation (JetPacks.Compose.test)
     androidTestImplementation (JetPacks.Compose.uiTest)
+
 
     debugImplementation (JetPacks.Compose.uiTestManifest)
     //implementation "jp.wasabeef.composable:glide:1.0.1"

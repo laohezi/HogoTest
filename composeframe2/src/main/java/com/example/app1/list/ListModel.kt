@@ -6,8 +6,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.app1.FBYJsonParser
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class ListViewModel :ViewModel() {
@@ -25,6 +27,13 @@ class ListViewModel :ViewModel() {
                 }
                 banner = it.optString("banner").replace("%@", "_aspect_ratio_2")
             }
+    }
+
+    init {
+        viewModelScope.launch {
+            getListData()
+        }
+
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.app1
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.spring
@@ -20,7 +21,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var  navigationViewModel:NavigationViewModel
+    private val  navigationViewModel by viewModels<NavigationViewModel>()
     @OptIn(ExperimentalPagerApi::class)
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +33,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (!navigationViewModel.onBack()){
+       /* if (!navigationViewModel.onBack()){
             super.onBackPressed()
-        }
+        }*/
 
     }
 }

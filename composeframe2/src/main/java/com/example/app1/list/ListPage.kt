@@ -1,6 +1,7 @@
 package com.example.app1.list
 
 import SeriesPcuCategoryItem
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,6 +29,7 @@ import com.example.app1.Screen
 import com.example.app1.utils.getScreenWidth
 import com.example.app1.utils.px2dp
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ListPage(
     viewModel: ListViewModel? = null,
@@ -42,11 +44,6 @@ fun ListPage(
         mutableStateOf(1)
     }
 
-    LaunchedEffect(key1 = "lala") {
-        _viewModel.getListData()
-        println("lalala--$inc")
-        inc++
-    }
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -55,6 +52,7 @@ fun ListPage(
             )
         },
         content = {
+
             Column() {
                 if (_viewModel.items.size > 0) {
                     LazyColumn(Modifier.fillMaxWidth()) {

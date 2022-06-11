@@ -1,12 +1,13 @@
 package com.example.app1.detail
 
 import SeriesPcuCategoryItem
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import android.annotation.SuppressLint
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.app1.LiveBannerView
@@ -30,10 +32,12 @@ import com.google.accompanist.pager.rememberPagerState
 import org.json.JSONObject
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalPagerApi
 @Composable
-fun DetailPage(viewModel: SeriesPcuDetailViewModel,
-               onBack:()->Unit
+fun DetailPage(
+    viewModel: SeriesPcuDetailViewModel,
+    onBack: () -> Unit
 ) {
 
     LaunchedEffect(key1 = "lala") {
@@ -46,7 +50,7 @@ fun DetailPage(viewModel: SeriesPcuDetailViewModel,
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = {
-                          onBack.invoke()
+                        onBack.invoke()
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_action_arrow_left),
@@ -58,7 +62,10 @@ fun DetailPage(viewModel: SeriesPcuDetailViewModel,
         }
 
     ) {
-        Column {
+
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState())
+        ) {
             viewModel.pageData.banner.observeAsState().value?.apply {
                 LiveBannerView(this as JSONObject)
             }
@@ -69,6 +76,7 @@ fun DetailPage(viewModel: SeriesPcuDetailViewModel,
             viewModel.pageData.options.observeAsState().value?.firstOrNull()?.apply {
                 OptionsView(item = this)
             }
+
         }
     }
 
@@ -93,7 +101,7 @@ fun SampleLooper(datas: MutableList<SeriesPcuDetailSampleItem>) {
         }
 
         HorizontalPagerIndicator(
-           pagerState = pageState
+            pagerState = pageState
         )
     }
 }
@@ -103,13 +111,28 @@ fun OptionsView(item: SeriesPcuCategoryItem) {
     var child by remember {
         mutableStateOf<SeriesPcuCategoryItem?>(null)
     }
+    var selectPosition by remember {
+        mutableStateOf(-1)
+    }
     Column {
         Text(item.title ?: "")
-        LazyRow() {
-            items(item.childs) { it ->
-                OptionsItem(item = it, onClick = { c ->
-                    child = c
-                })
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(item.childs.size) { index ->
+                val sn = item.childs[index].apply {
+                    selected = (index == selectPosition)
+                    println(selected)
+                }
+
+                OptionsItem(
+                    item = sn,
+                    onClick = { c ->
+                        selectPosition = index
+                        if (c.childs.isNotEmpty()){
+                            child = c
+                        }
+                    })
             }
         }
         child?.let {
@@ -124,26 +147,53 @@ fun OptionsView(item: SeriesPcuCategoryItem) {
 
 @Composable
 fun OptionsItem(item: SeriesPcuCategoryItem, onClick: ((SeriesPcuCategoryItem) -> Unit)? = null) {
-    Column(
-        Modifier
-            .border(1.dp, color = Color.Black)
-            .size(120.dp, 80.dp)
-            .clickable {
-                if (item.childs.size > 0) {
-                    onClick?.invoke(item)
-                }
-            }
-    ) {
-        Text(
-            text = item.childTypeName, modifier =
-            Modifier.fillMaxWidth(), textAlign = TextAlign.Center
-
+    Surface(
+        shape = RoundedCornerShape(5.dp),
+        border = BorderStroke(
+            1.dp,
+            color = if (item.selected) MaterialTheme.colors.primary else Color.Gray
         )
-        Text(text = item.price.toString())
+    ) {
+        Column(
+            modifier = Modifier
+
+                //   .border(1.dp, color = Color.Black)
+                .size(120.dp, 80.dp)
+                .clickable {
+
+                    onClick?.invoke(item)
+
+                },
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+
+            ) {
+            Text(
+                text = item.childTypeName, modifier =
+                Modifier.fillMaxWidth(), textAlign = TextAlign.Center
+
+            )
+            Text(
+                text = item.price.toString(), modifier =
+                Modifier.fillMaxWidth(), textAlign = TextAlign.Center
+            )
+        }
     }
+
 
 }
 
+
+@Preview
+@Composable
+fun ItemPreview() {
+    OptionsItem(item = SeriesPcuCategoryItem(
+    ).apply {
+        childTypeName = "Size"
+        price = "$666"
+
+    })
+}
 
 
 

@@ -53,8 +53,8 @@ open class SeriesPcuCategoryItem {
     var title: String? = null
     var sort: Int = -1
     var price: String? = null
-    var selected: Boolean = false
-    var selectable: Boolean = true
+    var selected: Boolean = true
+    var selectable: Boolean = false
     var childType: String = ""
     var childTypeName: String = ""
     var productInfo: String? = null
