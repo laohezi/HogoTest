@@ -83,6 +83,7 @@ fun NestedScroll() {
                 Box(
                     modifier = Modifier
                         .height(128.dp)
+
                         .verticalScroll(rememberScrollState())
                 ) {
                     Text(
