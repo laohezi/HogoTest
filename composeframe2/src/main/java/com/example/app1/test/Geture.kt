@@ -83,8 +83,8 @@ fun DragPreview() {
 
         Box(modifier = Modifier
             .offset { IntOffset(offsetX, offsetY) }
-            .background(Color.Green)
-            .size(50.dp)
+            .background(Color.Red)
+            .size(160.dp)
             .pointerInput(Unit){
                 detectDragGestures { change, dragAmount ->
                     change.consume()

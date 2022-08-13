@@ -54,6 +54,10 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 
@@ -73,6 +77,7 @@ dependencies {
     implementation(ThirdParty.Glide.okhttp3Integration)
     implementation(JetPacks.Test.junit)
     implementation(JetPacks.AndroidX.Test.Ext.junit)
+
 
 
 }
