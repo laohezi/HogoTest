@@ -118,6 +118,7 @@ class  MyLifecycleObserver(val lifecycleOwner: LifecycleOwner) :LifecycleObserve
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy(){
         Log.d("$TAG--${lifecycleOwner.toString()}","onDestroy")
+
     }
 
     fun onDetach(){
