@@ -8,3 +8,4 @@ evaluate(new File(
         settingsDir.parentFile,
         'flutter_module/.android/include_flutter.groovy'
 ))*/
+include("aldlserver")

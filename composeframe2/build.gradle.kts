@@ -8,8 +8,8 @@ plugins {
 
 
 android {
-    buildToolsVersion= "32"
-    compileSdk = 32
+    buildToolsVersion= "33"
+    compileSdk = 33
     defaultConfig {
         applicationId = "com.example.jetnews1"
         minSdk= 21

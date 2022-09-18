@@ -11,9 +11,9 @@ plugins {
 
 android {
 
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "33"
    // buildSdkVersion = 30
-    compileSdk = 31
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.hogotest"
@@ -78,6 +78,17 @@ dependencies {
     implementation(JetPacks.Test.junit)
     implementation(JetPacks.AndroidX.Test.Ext.junit)
 
+    implementation(Coroutines.android)
+    implementation(JetPacks.Compose.ui)
+    implementation (JetPacks.Compose.foundation)
+    implementation (JetPacks.Compose.material)
+    implementation (JetPacks.Compose.materialIconsExtended)
+    implementation (JetPacks.Compose.tooling)
+
+    implementation(JetPacks.Compose.animation)
+
+    implementation (JetPacks.Compose.runtime)
+    implementation (JetPacks.Compose.runtimeLivedata)
 
 
 
