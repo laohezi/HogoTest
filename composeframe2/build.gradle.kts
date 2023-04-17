@@ -57,35 +57,38 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = JetPacks.Compose.version
+        kotlinCompilerExtensionVersion = Compose.version
+    }
+    packagingOptions {
+        resources {
+            excludes += setOf("/META-INF/AL2.0", "/META-INF/LGPL2.1")
+        }
     }
 
-    packagingOptions {
-        excludes += "/META-INF/AL2.0"
-        excludes += "/META-INF/LGPL2.1"
-    }
+    namespace = "com.example.app1"
 }
 
 dependencies {
     implementation(Coroutines.android)
-    implementation(JetPacks.Compose.ui)
-    implementation (JetPacks.Compose.foundation)
-    implementation (JetPacks.Compose.material)
-    implementation (JetPacks.Compose.materialIconsExtended)
-    implementation (JetPacks.Compose.tooling)
+    implementation(Compose.ui)
+    implementation (Compose.foundation)
+    implementation (Compose.material)
+    implementation (Compose.materialIconsExtended)
+    implementation (Compose.tooling)
 
-    implementation(JetPacks.Compose.animation)
+    implementation(Compose.animation)
 
-    implementation (JetPacks.Compose.runtime)
-    implementation (JetPacks.Compose.runtimeLivedata)
+    implementation (Compose.runtime)
+    implementation (Compose.runtimeLivedata)
 
     implementation ("androidx.navigation:navigation-compose:2.4.0-beta02")
 
 
-    implementation ("androidx.appcompat:appcompat:1.4.0-alpha03")
+
     implementation ("androidx.activity:activity-ktx:1.3.1")
     implementation ("androidx.core:core-ktx:1.7.0-alpha01")
-    implementation ("androidx.activity:activity-compose:1.3.1")
+    //implementation ("androidx.activity:activity-compose:1.3.1")
+    implementation(AndroidX.Activity.activityCompose)
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
@@ -98,11 +101,11 @@ dependencies {
 
     androidTestImplementation ("androidx.test:rules:1.4.0")
     androidTestImplementation ("androidx.test:runner:1.4.0")
-    androidTestImplementation (JetPacks.Compose.test)
-    androidTestImplementation (JetPacks.Compose.uiTest)
+    androidTestImplementation (Compose.test)
+    androidTestImplementation (Compose.uiTest)
 
 
-    debugImplementation (JetPacks.Compose.uiTestManifest)
+    debugImplementation (Compose.uiTestManifest)
     //implementation "jp.wasabeef.composable:glide:1.0.1"
 
     implementation ("com.google.accompanist:accompanist-pager:+")

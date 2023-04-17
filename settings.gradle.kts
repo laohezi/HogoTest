@@ -9,3 +9,4 @@ evaluate(new File(
         'flutter_module/.android/include_flutter.groovy'
 ))*/
 include("aldlserver")
+include(":nativelib")

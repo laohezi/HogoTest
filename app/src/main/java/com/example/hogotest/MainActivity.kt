@@ -21,8 +21,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 
+}
+
+
+class MyCustomView(context: Context,attributeSet: AttributeSet?):View(context,attributeSet){
+
+    init {
+        val typedArray = context.obtainStyledAttributes(attributeSet,R.styleable.MyCustomView)
+        typedArray.getBoolean(R.styleable.MyCustomView_test,true)
+    }
 
 
 }

@@ -8,27 +8,27 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-public class PlayerService  extends Service {
+public class PlayerService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+
+
+        return new MyPlayer();
     }
 
-    class MyPlayer  extends   IPlayer.Stub{
+    class MyPlayer extends IPlayer.Stub {
 
         @Override
-        public void play() throws RemoteException {
-            Log.d("AIDLTEST","player start to play");
-
+        public String play() throws RemoteException {
+            return "我是来自remote的play";
         }
 
         @Override
-        public void pause() throws RemoteException {
-            Log.d("AIDLTEST","player start to play");
-
+        public String pause() throws RemoteException {
+            return "我是来自remote的pause";
         }
-
-
     }
 }
+
+

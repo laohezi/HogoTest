@@ -214,6 +214,9 @@ fun ImageWithLoading(url: String, imageViewModifier: Modifier) {
             is ImagePainter.State.Error -> {
                 println(painter.state)
             }
+            else->{
+
+            }
         }
 
     }

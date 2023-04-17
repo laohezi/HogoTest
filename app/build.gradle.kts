@@ -17,17 +17,17 @@ android {
 
     defaultConfig {
         applicationId = "com.example.hogotest"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    /*buildFeatures {
+    buildFeatures {
         // Enables Jetpack Compose for this module
         compose = true
-    }*/
+    }
 
 
     // Set both the Java and Kotlin compilers to target Java 8.
@@ -41,9 +41,10 @@ android {
         jvmTarget = "1.8"
     }
 
-    /*composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-alpha05"
-    }*/
+    composeOptions {
+        kotlinCompilerExtensionVersion = Compose.version
+
+    }
 
     buildTypes {
         release {
@@ -54,6 +55,7 @@ android {
             )
         }
     }
+    namespace = "com.example.hogotest"
 
     buildFeatures {
         viewBinding = true
@@ -67,28 +69,34 @@ android {
 dependencies {
     // fileTree("dir" to "libs","include" to  )
     implementation(Kotlin.stdlib)
-    implementation(JetPacks.AndroidX.coreKtx)
+    implementation(AndroidX.coreKtx)
     implementation(Coroutines.core)
-    implementation(JetPacks.AndroidX.appcompat)
-    implementation(JetPacks.AndroidX.constrainLayout)
+    implementation(AndroidX.appcompat)
+    implementation(AndroidX.constrainLayout)
+    implementation(AndroidX.RecyclerView.recyclerView)
 
-    implementation(ThirdParty.Glide.glide)
-    implementation(ThirdParty.Glide.compiler)
-    implementation(ThirdParty.Glide.okhttp3Integration)
-    implementation(JetPacks.Test.junit)
-    implementation(JetPacks.AndroidX.Test.Ext.junit)
+    implementation(Glide.glide)
+    implementation(Glide.compiler)
+  //  implementation(Glide.okhttp3Integration)
+    //implementation(Test.junit)
+    implementation(AndroidX.Test.Ext.junit)
 
     implementation(Coroutines.android)
-    implementation(JetPacks.Compose.ui)
-    implementation (JetPacks.Compose.foundation)
-    implementation (JetPacks.Compose.material)
-    implementation (JetPacks.Compose.materialIconsExtended)
-    implementation (JetPacks.Compose.tooling)
-
-    implementation(JetPacks.Compose.animation)
-
-    implementation (JetPacks.Compose.runtime)
-    implementation (JetPacks.Compose.runtimeLivedata)
+    implementation(Compose.ui)
+    implementation (Compose.foundation)
+    implementation (Compose.material)
+    implementation (Compose.materialIconsExtended)
+    implementation (Compose.tooling)
+    implementation(Compose.animation)
+    implementation (Compose.runtime)
+    implementation (Compose.runtimeLivedata)
+    implementation(AndroidX.Activity.activityCompose)
+    debugImplementation(LeakCannary)
+    implementation(project(":nativelib"))
+    implementation(Glide.glide)
+    implementation(com.example.bui.BRVAH)
+   // implementation(AndroidX)
+    implementation(Okhttp.okhttp)
 
 
 
