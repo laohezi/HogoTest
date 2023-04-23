@@ -22,8 +22,10 @@ import androidx.lifecycle.ViewModel
 
 class BlueToothActivity : AppCompatActivity() {
     val viewModel by viewModels<BlueToothViewModel>()
+    val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.stateOpen = bluetoothAdapter.isEnabled
         setContent {
             Bluetooth(switchBlueTooth = {
                 toggleBlutooth(it)
@@ -58,7 +60,7 @@ val bludtoothReceiver = object : BroadcastReceiver() {
 }
 
 fun toggleBlutooth(enable: Boolean) {
-    val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
 
     if (ActivityCompat.checkSelfPermission(
             this,
@@ -72,9 +74,10 @@ fun toggleBlutooth(enable: Boolean) {
         )
         return
     }
-    if (viewModel.stateOpen == bluetoothAdapter.isEnabled){
+   /* if (enable == bluetoothAdapter.isEnabled){
         return
-    }
+    }*/
+
     if (enable) {
         bluetoothAdapter.enable()
     } else {
