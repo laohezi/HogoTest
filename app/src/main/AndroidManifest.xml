@@ -3,7 +3,11 @@
   <queries>
     <package android:name="com.example.aldlserver"/>
   </queries>
+
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.BLUETOOTH"/>
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
   <application
     android:allowBackup="true"
@@ -12,7 +16,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".jni.JNIActivity"
+    <activity android:name=".bluetooth.BlueToothActivity"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -21,7 +25,9 @@
       </intent-filter>
     </activity>
 
-      <!-- <activity android:name=".JavaActivity" />-->
+
+
+    <!-- <activity android:name=".JavaActivity" />-->
   </application>
 
 </manifest>

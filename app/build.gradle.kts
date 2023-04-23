@@ -46,6 +46,25 @@ android {
 
     }
 
+    flavorDimensions += listOf("chanel","country")
+    productFlavors {
+       register("xiaomi"){
+           dimension = "chanel"
+           buildConfigField("String","name","xiaomi")
+
+       }
+        register("huawei"){
+            dimension = "chanel"
+        }
+
+        register("us"){
+            dimension = "country"
+        }
+        register("uk"){
+            dimension = "country"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -59,7 +78,27 @@ android {
 
     buildFeatures {
         viewBinding = true
+
+
     }
+    applicationVariants.all {
+
+    }
+
+
+
+    task("My Task"){
+        doFirst {
+            println("my task do first")
+        }
+        println("my task")
+
+        doLast {
+            println("my task do last")
+        }
+
+    }
+
 }
 
 
@@ -97,6 +136,7 @@ dependencies {
     implementation(com.example.bui.BRVAH)
    // implementation(AndroidX)
     implementation(Okhttp.okhttp)
+    implementation(AndroidX.activityKtx)
 
 
 
