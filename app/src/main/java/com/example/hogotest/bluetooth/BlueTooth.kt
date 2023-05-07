@@ -10,15 +10,21 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.DisplayMetrics
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Button
 import androidx.compose.material.Switch
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
+import com.example.hogotest.utils.Stopwatch
+import kotlinx.coroutines.delay
 
 class BlueToothActivity : AppCompatActivity() {
     val viewModel by viewModels<BlueToothViewModel>()
@@ -27,10 +33,10 @@ class BlueToothActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel.stateOpen = bluetoothAdapter.isEnabled
         setContent {
-            Bluetooth(switchBlueTooth = {
-                toggleBlutooth(it)
-            },viewModel)
+           StopWatchTest()
         }
+
+
 
     }
 
@@ -84,7 +90,6 @@ fun toggleBlutooth(enable: Boolean) {
         bluetoothAdapter.disable()
     }
     viewModel.stateOpen = bluetoothAdapter.isEnabled
-
 }
 }
 
@@ -126,5 +131,67 @@ fun Bluetooth(switchBlueTooth: (Boolean) -> Unit,checked:Boolean) {
           switchBlueTooth(it)
       })
     }
+}
+
+@Preview
+@Composable
+fun StopWatchTest(){
+    val stopwatch = remember {
+        Stopwatch(10*1000)
+    }
+    var time by remember {
+        mutableStateOf(0L)
+    }
+    LaunchedEffect(key1 = stopwatch) {
+        while (true){
+            time = stopwatch.getElapsedTime()
+            delay(100)
+        }
+    }
+
+    Column {
+        Row() {
+            Button(
+                onClick = {
+                    stopwatch.start()
+                }){
+
+            }
+
+            Button(onClick = {
+                stopwatch.stop()
+            }){}
+
+            Button(onClick = {
+                stopwatch.pause()
+            }){}
+
+            Button(onClick = {
+                stopwatch.resume()
+            }){}
+        }
+
+        Text(text =time.toString())
+
+    }
+
+
+}
+
+
+
+class SingleTon{
+    companion object{
+       val  instance by lazy {
+           SingleTon()
+       }
+
+    }
+
+    private constructor(){
+
+    }
+
+
 }
 

@@ -1,9 +1,11 @@
 
 import com.example.bui.*
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("kotlin-kapt")
 }
 
 
@@ -87,6 +89,8 @@ android {
 
 
 
+
+
     task("My Task"){
         doFirst {
             println("my task do first")
@@ -137,6 +141,14 @@ dependencies {
    // implementation(AndroidX)
     implementation(Okhttp.okhttp)
     implementation(AndroidX.activityKtx)
+    implementation(com.example.bui.AndroidAutoSize)
+    implementation(Room.runtime)
+    kapt(Room.compiler)
+    implementation(Room.paging)
+    implementation(Room.ktx)
+
+    implementation(Retrofit.retrofit)
+    androidTestImplementation("androidx.test:runner:1.2.0")
 
 
 

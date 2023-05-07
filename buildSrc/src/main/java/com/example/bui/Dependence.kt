@@ -35,6 +35,19 @@ object Test {
     const val junit = "junit:junit:4.12"
 }
 
+object  Room {
+    private const val version = "2.5.1"
+    const val runtime = "androidx.room:room-runtime:$version"
+    const val compiler = "androidx.room:room-compiler:$version"
+    const val ktx = "androidx.room:room-ktx:$version"
+    const val paging = "androidx.room:room-paging:$version"
+}
+
+object Paging {
+    private const val version = "3.1.0-alpha01"
+    const val runtime = "androidx.paging:paging-runtime-ktx:$version"
+}
+
 object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.7.0-alpha02"
     const val coreKtx = "androidx.core:core-ktx:1.7.0"

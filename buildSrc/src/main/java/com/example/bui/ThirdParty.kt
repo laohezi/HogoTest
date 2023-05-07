@@ -23,6 +23,15 @@ object Okhttp{
     const val okhttp = "com.squareup.okhttp3:okhttp:$version"
 }
 
+
+object Retrofit{
+    private const val  version = "2.9.0"
+
+    const val  retrofit = "com.squareup.retrofit2:retrofit:$version"
+}
+
+
+
 const val BRVAH = "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.0-beta04"
 
-
+const val AndroidAutoSize = "com.github.JessYanCoding:AndroidAutoSize:v1.2.1"

@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.aldlserver.IPlayer
+import me.jessyan.autosize.external.ExternalAdaptManager
 import kotlin.concurrent.thread
 
 class AIDLClientActivity :AppCompatActivity(){
@@ -21,6 +22,7 @@ class AIDLClientActivity :AppCompatActivity(){
             player = IPlayer.Stub.asInterface(p1)
             Log.d("huhuhu",player.play())
             Log.d("huhuhu",player.pause())
+
 
         }
 

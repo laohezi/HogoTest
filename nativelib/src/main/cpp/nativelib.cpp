@@ -18,10 +18,6 @@ Java_com_example_nativelib_NativeLib_stringFromJNI(
     env->CallVoidMethod(thiz,jmethodId,jHello);
     jmethodID sjm = env->GetStaticMethodID(jc,"stat","(Ljava/lang/String;)V");
     env->CallStaticVoidMethod(jc,sjm,jHello);
-
-
-
-
     return env->NewStringUTF(hello.c_str());
 }
 extern "C"
