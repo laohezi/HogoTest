@@ -2,6 +2,7 @@ package com.example.hogotest.room
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.EditText
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 
@@ -20,11 +22,12 @@ import kotlinx.coroutines.launch
 class RoomActivity : AppCompatActivity() {
     val userDao = db.userDao()
     val bookDao = db.bookDao()
+    var searchText = ""
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column() {
+            Column {
                 Page(insertUser = { insertUser() }, insertBook = {insertBook()})
                 Button(onClick = {
                      lifecycleScope.launch(Dispatchers.IO) {
@@ -36,6 +39,9 @@ class RoomActivity : AppCompatActivity() {
                 }) {
                     Text(text = "查询")
                 }
+
+                SearchBox()
+
             }
         }
     }
@@ -81,6 +87,37 @@ fun InsertBook(onClick: () -> Unit) {
         Text(text = "插入图书")
     }
 }
+
+@Composable
+fun SearchBox(){
+    var searchText by remember {
+        mutableStateOf("")
+    }
+    val scope = rememberCoroutineScope()
+    Row() {
+       TextField(value = searchText, onValueChange = {
+           searchText = it
+       })
+
+        Button(onClick = {
+            scope.launch(Dispatchers.IO) {
+                val sb = StringBuilder()
+                sb.append("%")
+                sb.append(searchText.replace("\n",""))
+                sb.append("%")
+            val books =    db.bookDao().getAllBooks(sb.toString())
+                books.forEach{
+                    println(it)
+                }
+            }
+        }) {
+          Text(text = "搜索")
+        }
+    }
+
+}
+
+
 
 @Composable
 

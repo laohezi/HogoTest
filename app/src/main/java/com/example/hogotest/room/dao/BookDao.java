@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import com.example.hogotest.room.Book;
 import com.example.hogotest.room.BookVO;
+import com.example.hogotest.room.BookVO2;
 
 import java.util.List;
 
@@ -25,5 +26,9 @@ public interface BookDao {
             "user.email as email" +
             " FROM  book , user WHERE book.student_id = user.id")
     List<BookVO> getAll();
+
+
+    @Query("SELECT * FROM book where book.author like :searchBox or book.name like :searchBox")
+    List<BookVO2> getAllBooks(String searchBox);
 
 }
