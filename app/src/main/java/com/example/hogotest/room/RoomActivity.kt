@@ -26,6 +26,7 @@ class RoomActivity : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             Column {
                 Page(insertUser = { insertUser() }, insertBook = {insertBook()})
@@ -105,7 +106,7 @@ fun SearchBox(){
                 sb.append("%")
                 sb.append(searchText.replace("\n",""))
                 sb.append("%")
-            val books =    db.bookDao().getAllBooks(sb.toString())
+                val books =    db.bookDao().getAllBooks(sb.toString())
                 books.forEach{
                     println(it)
                 }

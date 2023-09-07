@@ -109,3 +109,20 @@ object Coroutines {
 object Junit {
 
 }
+
+object Camerax{
+    private  val camerax_version = "1.3.0-alpha04"
+    val camera2 = "androidx.camera:camera-camera2:${camerax_version}"
+    val lifecycle = "androidx.camera:camera-lifecycle:${camerax_version}"
+    val cameraVideo = "androidx.camera:camera-video:${camerax_version}"
+    val cameraView = "androidx.camera:camera-view:${camerax_version}"
+    val cameraMlkit = "androidx.camera:camera-mlkit-vision:${camerax_version}"
+    val cameraExtension = "androidx.camera:camera-extensions:${camerax_version}"
+    val barcode = "com.google.mlkit:barcode-scanning:17.0.2"
+
+
+
+
+
+
+}

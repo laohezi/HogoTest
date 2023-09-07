@@ -13,6 +13,8 @@ class MainActivity:AppCompatActivity() {
         val intent = Intent(this,PlayerService::class.java)
 
         startService(intent)
+        viewModelStore
+
     }
 
 }

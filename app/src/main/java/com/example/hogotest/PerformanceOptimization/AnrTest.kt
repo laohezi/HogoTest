@@ -29,9 +29,9 @@ class ClickAnrTest:AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Thread.sleep(100000)
+        //Thread.sleep(100000)
+       // startService()
         setContent {
-
 
         }
 

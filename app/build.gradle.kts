@@ -25,6 +25,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments.put("room.schemaLocation","$projectDir/schemas".toString())
+            }
+        }
     }
     buildFeatures {
         // Enables Jetpack Compose for this module
@@ -149,6 +155,17 @@ dependencies {
 
     implementation(Retrofit.retrofit)
     androidTestImplementation("androidx.test:runner:1.2.0")
+    implementation(project(":mycommon"))
+    implementation(com.example.bui.OcrChinese)
+    implementation(Camerax.camera2)
+    implementation(Camerax.cameraView)
+    implementation(Camerax.cameraMlkit)
+    implementation(Camerax.lifecycle)
+    implementation(Camerax.cameraExtension)
+    implementation(Camerax.cameraVideo)
+    implementation(Camerax.barcode)
+    implementation(com.example.bui.UtilsCode)
+
 
 
 

@@ -30,8 +30,9 @@ class JNIActivity :AppCompatActivity(){
         textView = TextView(this,null)
         var text = "yuanshi"
         nativeLib.errorInJava()
+       text = nativeLib.stringFromJNIObject()
         try {
-           // text = nativeLib.getSecondNumberFromJNI(array)
+
 
         }catch (e:Exception){
             e.printStackTrace()
@@ -44,24 +45,6 @@ class JNIActivity :AppCompatActivity(){
 
 
 
-        val client =  OkHttpClient.Builder()
-            .connectTimeout(120,TimeUnit.SECONDS)
-            .readTimeout(120,TimeUnit.SECONDS)
-            .addNetworkInterceptor(LogcatInterceptor())
-            .build()
-        textView.setOnClickListener {
-            thread {
-                try {
-                    val request = Request.Builder().url("https://www.baidu.com").build()
-
-                    val response = client.newCall(request).execute()
-                    Log.d("lalal", response.toString() + "--" + response.body())
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                } finally {
-                }
-            }
-        }
 
 
     }
@@ -83,24 +66,6 @@ class JNIActivity :AppCompatActivity(){
 
 }
 
-class LogcatInterceptor :Interceptor{
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        Log.d("okhttp request is:",request.toString())
-        val response = chain.proceed(request)
-        Log.d(" okhttp response is:",response.body()!!.string())
-        return  response
-    }
-}
-
-class CacheInterceptor:Interceptor{
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        val response = chain.proceed(request)
-        return  response
-    }
-
-}
 
 
 fun View.rPrintlnParent(){

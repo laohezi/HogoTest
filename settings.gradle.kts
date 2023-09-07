@@ -10,4 +10,6 @@ evaluate(new File(
 ))*/
 include("aldlserver")
 include(":nativelib")
-include(":filemanager")
+//include(":filemanager")
+include(":mycommon")
+include(":plugins")

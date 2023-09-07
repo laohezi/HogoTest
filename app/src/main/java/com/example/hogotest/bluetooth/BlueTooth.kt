@@ -1,6 +1,7 @@
 package com.example.hogotest.bluetooth
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
@@ -8,10 +9,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.content.pm.PermissionGroupInfo
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.DisplayMetrics
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
@@ -29,68 +31,64 @@ import kotlinx.coroutines.delay
 class BlueToothActivity : AppCompatActivity() {
     val viewModel by viewModels<BlueToothViewModel>()
     val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+    var permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions(
+        )
+    ) {
+        toggleBlutooth(true)
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.stateOpen = bluetoothAdapter.isEnabled
+
         setContent {
-           StopWatchTest()
+            StopWatchTest()
+        }
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN
+            )
+        )
+
+
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            viewModel.stateOpen = resultCode == Activity.RESULT_OK
+        }
+    }
+
+
+    fun startScan() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
+        registerReceiver(bludtoothReceiver, intentFilter)
+    }
+
+    val bludtoothReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
         }
 
-
-
     }
 
+    @SuppressLint("MissingPermission")
+    fun toggleBlutooth(enable: Boolean) {
 
 
-
-
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == 1) {
-        viewModel.stateOpen = resultCode == Activity.RESULT_OK
+        if (enable) {
+            bluetoothAdapter.enable()
+        } else {
+            bluetoothAdapter.disable()
+        }
+        viewModel.stateOpen = bluetoothAdapter.isEnabled
     }
-}
-
-
-fun startScan() {
-    val intentFilter = IntentFilter()
-    intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED)
-    registerReceiver(bludtoothReceiver, intentFilter)
-}
-
-val bludtoothReceiver = object : BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {
-
-    }
-
-}
-
-fun toggleBlutooth(enable: Boolean) {
-
-
-    if (ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.BLUETOOTH_CONNECT
-        ) != PackageManager.PERMISSION_GRANTED
-    ) {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(Manifest.permission.BLUETOOTH_CONNECT),
-            1
-        )
-        return
-    }
-   /* if (enable == bluetoothAdapter.isEnabled){
-        return
-    }*/
-
-    if (enable) {
-        bluetoothAdapter.enable()
-    } else {
-        bluetoothAdapter.disable()
-    }
-    viewModel.stateOpen = bluetoothAdapter.isEnabled
-}
 }
 
 class BlueToothViewModel : ViewModel() {
@@ -104,16 +102,16 @@ val key = "blue tooth"
 
 @Preview
 @Composable
-fun Bluetooth(){
-    Bluetooth(switchBlueTooth = {it ->
+fun Bluetooth() {
+    Bluetooth(switchBlueTooth = { it ->
 
 
-    },false)
+    }, false)
 }
 
 
 @Composable
-fun Bluetooth(switchBlueTooth: (Boolean) -> Unit,viewModel: BlueToothViewModel) {
+fun Bluetooth(switchBlueTooth: (Boolean) -> Unit, viewModel: BlueToothViewModel) {
 
     Column() {
         Switch(checked = viewModel.stateOpen, onCheckedChange = {
@@ -124,26 +122,26 @@ fun Bluetooth(switchBlueTooth: (Boolean) -> Unit,viewModel: BlueToothViewModel) 
 
 
 @Composable
-fun Bluetooth(switchBlueTooth: (Boolean) -> Unit,checked:Boolean) {
+fun Bluetooth(switchBlueTooth: (Boolean) -> Unit, checked: Boolean) {
 
     Column() {
-      Switch(checked = checked, onCheckedChange = {
-          switchBlueTooth(it)
-      })
+        Switch(checked = checked, onCheckedChange = {
+            switchBlueTooth(it)
+        })
     }
 }
 
 @Preview
 @Composable
-fun StopWatchTest(){
+fun StopWatchTest() {
     val stopwatch = remember {
-        Stopwatch(10*1000)
+        Stopwatch(10 * 1000)
     }
     var time by remember {
         mutableStateOf(0L)
     }
     LaunchedEffect(key1 = stopwatch) {
-        while (true){
+        while (true) {
             time = stopwatch.getElapsedTime()
             delay(100)
         }
@@ -154,24 +152,24 @@ fun StopWatchTest(){
             Button(
                 onClick = {
                     stopwatch.start()
-                }){
+                }) {
 
             }
 
             Button(onClick = {
                 stopwatch.stop()
-            }){}
+            }) {}
 
             Button(onClick = {
                 stopwatch.pause()
-            }){}
+            }) {}
 
             Button(onClick = {
                 stopwatch.resume()
-            }){}
+            }) {}
         }
 
-        Text(text =time.toString())
+        Text(text = time.toString())
 
     }
 
@@ -179,16 +177,15 @@ fun StopWatchTest(){
 }
 
 
-
-class SingleTon{
-    companion object{
-       val  instance by lazy {
-           SingleTon()
-       }
+class SingleTon {
+    companion object {
+        val instance by lazy {
+            SingleTon()
+        }
 
     }
 
-    private constructor(){
+    private constructor() {
 
     }
 

@@ -1,13 +1,11 @@
 package com.example.hogotest
 
 import android.app.Application
-lateinit var myapp: Application
-class MyAPp : Application(){
+import com.hugo.mylibrary.components.BaseApp
 
+class MyApp : BaseApp(){
     override fun onCreate() {
-        myapp = this
         super.onCreate()
-
-
+       // Thread.sleep(3000)
     }
 }

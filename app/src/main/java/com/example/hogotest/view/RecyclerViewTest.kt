@@ -226,6 +226,7 @@ class InnerRecyclerView(context: Context,attributeSet: AttributeSet? = null) :Re
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         Log.d("jijiji",this.toString() +ev.toString())
+
         if (ev.y<lastY){
             if (canScrollVertically(1)){
 
@@ -245,6 +246,10 @@ class InnerRecyclerView(context: Context,attributeSet: AttributeSet? = null) :Re
         }
 
         lastY = ev.y
+        ev.getX()
+        ev.pointerCount
+
+
 
         return super.dispatchTouchEvent(ev)
 

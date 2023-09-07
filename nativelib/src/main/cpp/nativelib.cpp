@@ -140,3 +140,18 @@ JNI_OnLoad(JavaVM* vm, void* reserved) {
 
     return JNI_VERSION_1_6;
 }*/
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_example_nativelib_NativeLib_stringFromJNIObject(JNIEnv *env, jobject thiz) {
+    jclass  clz = env->GetObjectClass(thiz);
+    jmethodID  methodNewObject = env->GetMethodID(clz,"newObject", "()Lcom/example/nativelib/NativeObject;");
+    jobject  obj = env->CallObjectMethod(thiz,methodNewObject);
+    jclass  objClz = env->GetObjectClass(obj);
+    jfieldID jfieldId = env->GetFieldID(objClz,"name", "Ljava/lang/String;");
+    jstring ret = static_cast<jstring>(env->GetObjectField(obj, jfieldId));
+    return  ret;
+
+
+
+}

@@ -2,7 +2,9 @@ package com.example.hogotest;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.graphics.Canvas;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -63,6 +65,7 @@ public class JavaActivity extends AppCompatActivity {
             bitmap = bitmap.copy(Bitmap.Config.ARGB_8888,true);
         }
         Canvas canvas = new Canvas(bitmap);
+
 
     }
 }

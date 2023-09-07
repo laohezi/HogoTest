@@ -1,5 +1,8 @@
 package com.example.hogotest
 
+import android.app.Activity
+import android.app.ActivityManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +14,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.hugo.mylibrary.utils.getAllActivities
 
 
 import kotlinx.coroutines.*
@@ -20,115 +42,70 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        TextView(this).post{}
+        setContent {
+            Actictys()
+        }
     }
-
 }
 
+@Composable
+fun Actictys() {
+    val activitys = getAllActivities().filter { !it.name.contains("Instrumentation") }
+    val activity = LocalContext.current as Activity
+    LazyVerticalGrid(columns = GridCells.Fixed(3)) {
 
-class MyCustomView(context: Context,attributeSet: AttributeSet?):View(context,attributeSet){
+        items(activitys.size) { position ->
+            val it = activitys[position]
+            val name = remember {
+                it.name.split(".").last().replace("Test", "").replace("Activity", "")
+            }
 
-    init {
-        val typedArray = context.obtainStyledAttributes(attributeSet,R.styleable.MyCustomView)
-        typedArray.getBoolean(R.styleable.MyCustomView_test,true)
-    }
+            var readyToDraw by remember {
+                mutableStateOf(false)
+            }
+            var rawSize = 13.sp
+            var compatSize by remember {
+                mutableStateOf(rawSize)
+            }
 
+            Button(
+                onClick = {
+                    activity.startActivity(Intent().apply {
+                        setComponent(ComponentName(it.packageName, it.name))
+                    })
+                },
+                Modifier
+                    .padding(2.dp)
+                    .fillMaxWidth()
+                    .height(40.dp)
+            ) {
 
-}
+                Text(text = name,
+                   fontSize = compatSize,
 
+                    modifier = Modifier
+                      //  .verticalScroll(rememberScrollState(), true)
+                        .drawWithContent {
+                            if (readyToDraw) {
+                                drawContent()
+                            }
+                        },
+                    onTextLayout = { result ->
+                        if(result.hasVisualOverflow){
+                            compatSize *= 0.9f
+                        }else{
+                            readyToDraw = true
+                        }
 
-
-
-
-class  CustomView(context: Context,attributeSet: AttributeSet?):LinearLayout(context,attributeSet){
-    val TAG = this::class.java.canonicalName
-    lateinit var  text1: TextView
-    lateinit var  text2: TextView
-    lateinit var  text3: TextView
-    lateinit var  text4: TextView
-    init {
-        setBackgroundColor(Color.LTGRAY)
-        text1 = TextView(context)
-        text1.setBackgroundColor(Color.BLUE)
-        text2 = TextView(context)
-        text3 = TextView(context)
-        text4 = TextView(context)
-        val layoutParams1 = LayoutParams(500,500)
-        text1.layoutParams = layoutParams1
-
-        //setTextView(text1,"text1")
-        GlobalScope.launch {
-            val start = System.currentTimeMillis()
-            val data = async { getData1fromBg() }
-            val data2 = async { getData1fromBg() }
-            text1.text = data.await() + data2.await()
-            Log.d(TAG, "spend time:${System.currentTimeMillis() - start} ")
-
-        }
-        setTextView(text2,"text2")
-        setTextView(text3,"text3")
-        setTextView(text4,"text4")
-        text1.viewTreeObserver.addOnGlobalLayoutListener {
-            Log.d(TAG, "onGlobal: measured Width = ${text1.measuredWidth} \n width is ${text1.width}")
-        }
-        val layoutParams = LinearLayout.LayoutParams(-1,-1)
-        layoutParams.width = 300
-        layoutParams.height = 300
-        addView(text1)
-       /* addView(text1,layoutParams)
-        addView(text2,layoutParams)
-        addView(text3,layoutParams)
-        addView(text4,layoutParams)*/
-        post {
-            Log.d(TAG, "run post: ")
-            requestLayout()
-        }
-
-        setLayoutParams(LayoutParams(800,800))
-    }
-
-
-    private fun setTextView(textView: TextView,text:String){
-        textView.setBackgroundColor(Color.DKGRAY)
-        textView.text = text
-    }
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        Log.d(TAG, "onMeasure: measuredWidth = ${text1.measuredWidth} \n width is ${text1.width}")
-    }
-
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        Log.d(TAG, "beforeLayout: measuredWidth = ${text1.measuredWidth} \n" +
-                " width is ${text1.width}")
-        super.onLayout(changed, l, t, r, b)
-        Log.d(TAG, "afterLayout: measuredWidth = ${text1.measuredWidth} \n" +
-                " width is ${text1.width}")
-        val span = (width - text1.measuredWidth*childCount)/(childCount+1)
-
-        var lastViewR = 0
-        for (i in 0 until  childCount){
-            val child = getChildAt(i)
-            child.layout(lastViewR+span,0,lastViewR+span+child.measuredWidth,child.measuredHeight)
-            lastViewR += span + child.width
+                    }
+                )
+            }
         }
 
 
     }
 
+
 }
 
-suspend fun  getDatafromBg(): String {
-   return withContext(Dispatchers.IO){
-        delay(1000)
-        return@withContext " I am from worker"
-    }
-}
-
-suspend fun  getData1fromBg(): String {
-    return withContext(Dispatchers.IO){
-        delay(1500)
-        return@withContext " I am from worker"
-    }
-}
