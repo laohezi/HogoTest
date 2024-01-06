@@ -1,11 +1,11 @@
 
 import com.example.bui.*
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 
@@ -93,6 +93,10 @@ android {
 
     }
 
+    packagingOptions {
+
+    }
+
 
 
 
@@ -125,7 +129,9 @@ dependencies {
     implementation(AndroidX.RecyclerView.recyclerView)
 
     implementation(Glide.glide)
-    implementation(Glide.compiler)
+    /*implementation(Glide.compiler){
+        exclude(group = "META-INF/gradle/incremental.annotation.processors")
+    }*/
   //  implementation(Glide.okhttp3Integration)
     //implementation(Test.junit)
   //  implementation(AndroidX.Test.Ext.junit)
@@ -157,7 +163,7 @@ dependencies {
     implementation(Retrofit.retrofit)
     implementation(com.example.bui.UtilsCode)
     androidTestImplementation("androidx.test:runner:1.5.2")
-    implementation(project(":mycommon"))
+
     implementation(com.example.bui.OcrChinese)
     implementation(Camerax.camera2)
     implementation(Camerax.cameraView)
@@ -167,6 +173,11 @@ dependencies {
     implementation(Camerax.cameraVideo)
     implementation(Camerax.barcode)
     implementation(com.example.bui.UtilsCode)
+    implementation ("com.google.guava:guava:31.0.1-android")
+    implementation(project(":mycommon"))
+    implementation(project(":annotation"))
+    ksp(project(":annotation"))
+
 
 
 

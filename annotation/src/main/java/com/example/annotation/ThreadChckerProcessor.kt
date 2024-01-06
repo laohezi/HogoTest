@@ -1,6 +1,5 @@
-package com.hugo.mylibrary.annotation
+package com.example.annotation
 
-import com.google.auto.service.AutoService
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
@@ -15,26 +14,24 @@ import org.objectweb.asm.Label
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 
-@AutoService(SymbolProcessorProvider::class)
-class ThreadCheckerProcessorProvider : SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        return ThreadCheckerProcessor(environment.codeGenerator, environment.logger)
-    }
-}
+
+
 
 
 class ThreadCheckerProcessor(
     val codeGenerator: CodeGenerator,
     val logger: KSPLogger
-):SymbolProcessor {
+) : SymbolProcessor {
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        val annotationMethods = resolver.getSymbolsWithAnnotation(ThreadChecker::class.qualifiedName!!).filterIsInstance<KSFunctionDeclaration>()
+        val annotationMethods =
+            resolver.getSymbolsWithAnnotation(ThreadChecker::class.qualifiedName!!)
+                .filterIsInstance<KSFunctionDeclaration>()
         annotationMethods.forEach {
-            val visitor = KSPVisitor(codeGenerator,it , logger)
+            val visitor = KSPVisitor(codeGenerator, it, logger)
             it.accept(visitor, Unit)
         }
-          return emptyList()
+        return emptyList()
     }
 
 
@@ -43,8 +40,8 @@ class ThreadCheckerProcessor(
 class KSPVisitor(
     val codeGenerator: CodeGenerator,
     val method: KSFunctionDeclaration,
-    private  val logger: KSPLogger
-):KSVisitorVoid(){
+    private val logger: KSPLogger
+) : KSVisitorVoid() {
     override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
         val mv = ASMVisitor(codeGenerator, method, logger)
         mv.visitCode()
@@ -53,20 +50,38 @@ class KSPVisitor(
     }
 }
 
-class  ASMVisitor(
+class ASMVisitor(
     val codeGenerator: CodeGenerator,
-    val method:KSFunctionDeclaration,
-    private  val logger: KSPLogger
-): MethodVisitor(Opcodes.ASM9){
+    val method: KSFunctionDeclaration,
+    private val logger: KSPLogger
+) : MethodVisitor(Opcodes.ASM9) {
     override fun visitCode() {
         super.visitCode()
-        val threadName = method.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments?.get(0)?.value
-        mv.visitFieldInsn(Opcodes.GETSTATIC,"java/lang/Thread","currentThread","Ljava/lang/Thread;")
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,"java/lang/Thread","getName","()Ljava/lang/String;",false)
+        val threadName =
+            method.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments?.get(0)?.value
+        mv.visitFieldInsn(
+            Opcodes.GETSTATIC,
+            "java/lang/Thread",
+            "currentThread",
+            "Ljava/lang/Thread;"
+        )
+        mv.visitMethodInsn(
+            Opcodes.INVOKEVIRTUAL,
+            "java/lang/Thread",
+            "getName",
+            "()Ljava/lang/String;",
+            false
+        )
         mv.visitLdcInsn(threadName)
-        mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL,"java/lang/String","equals","(Ljava/lang/Object;)Z",false)
+        mv.visitMethodInsn(
+            Opcodes.INVOKEVIRTUAL,
+            "java/lang/String",
+            "equals",
+            "(Ljava/lang/Object;)Z",
+            false
+        )
         val labelEnd = Label()
-        mv.visitJumpInsn(Opcodes.IFEQ,labelEnd)
+        mv.visitJumpInsn(Opcodes.IFEQ, labelEnd)
         //log error
         mv.visitLdcInsn("Method ${method.simpleName.asString()} must be called from thread $threadName but was called from ${Thread.currentThread().name}")
         mv.visitMethodInsn(
