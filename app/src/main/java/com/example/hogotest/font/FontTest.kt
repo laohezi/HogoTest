@@ -11,10 +11,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import com.example.hogotest.databinding.ActivityFontTestBinding
+import com.hugo.mylibrary.annotation.ThreadChecker
 
 class FontTestActivity :AppCompatActivity(){
     lateinit var  binding :ActivityFontTestBinding
     val string = "t"
+    @ThreadChecker("main")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFontTestBinding.inflate(LayoutInflater.from(this))

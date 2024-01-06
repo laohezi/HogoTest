@@ -5,19 +5,21 @@ object Compose {
     const val snapshot = ""
     const val version = "1.3.1"
 
-    const val foundation = "androidx.compose.foundation:foundation:$version"
-    const val animation = "androidx.compose.animation:animation:$version"
+    const val bom = "androidx.compose:compose-bom:2023.01.00"
 
-    /*const val layout = "androidx.compose.foundation:foundation-layout:$version"*/
-    const val material = "androidx.compose.material:material:$version"
-    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:$version"
-    const val runtime = "androidx.compose.runtime:runtime:$version"
-    const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
-    const val tooling = "androidx.compose.ui:ui-tooling:$version"
-    const val ui = "androidx.compose.ui:ui:$version"
-    const val test = "androidx.compose.ui:ui-test:$version"
-    const val uiTest = "androidx.compose.ui:ui-test-junit4:$version"
-    const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
+    const val foundation = "androidx.compose.foundation:foundation"
+    const val animation = "androidx.compose.animation:animation"
+
+    /*const val layout = "androidx.compose.foundation:foundation-layout"*/
+    const val material = "androidx.compose.material:material"
+    const val materialIconsExtended = "androidx.compose.material:material-icons-extended"
+    const val runtime = "androidx.compose.runtime:runtime"
+    const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata"
+    const val tooling = "androidx.compose.ui:ui-tooling"
+    const val ui = "androidx.compose.ui:ui"
+    const val test = "androidx.compose.ui:ui-test"
+    const val uiTest = "androidx.compose.ui:ui-test-junit4"
+    const val uiTestManifest = "androidx.compose.ui:ui-test-manifest"
     /*const val uiUtil = "androidx.compose.ui:ui-util:$version"*/
 /*
         const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
@@ -27,7 +29,7 @@ object Compose {
         const val snapshot = ""
         const val version = "1.0.0-alpha02"
 
-        const val material3 = "androidx.compose.material3:material3:$version"
+        const val material3 = "androidx.compose.material3:material3"
     }
 }
 

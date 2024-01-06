@@ -10,14 +10,8 @@ import com.hugo.mylibrary.components.application
 
 @Database(
     entities = [Book::class,User::class],
-    version = 2,
-    exportSchema = true,
-    autoMigrations = [
-        AutoMigration(from = 1,to=2)
-    ]
-
-
-)
+    version = 1,
+    exportSchema = true,)
 abstract class AppDatabase():RoomDatabase(){
     abstract fun bookDao(): BookDao
     abstract fun userDao(): UserDao

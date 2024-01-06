@@ -3,6 +3,7 @@ package com.example.hogotest.room.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.example.hogotest.room.Book;
 import com.example.hogotest.room.BookVO;
@@ -27,7 +28,7 @@ public interface BookDao {
             " FROM  book , user WHERE book.student_id = user.id")
     List<BookVO> getAll();
 
-
+   @Transaction
     @Query("SELECT * FROM book where book.author like :searchBox or book.name like :searchBox")
     List<BookVO2> getAllBooks(String searchBox);
 

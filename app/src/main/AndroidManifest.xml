@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-  <queries>
-    <package android:name="com.example.aldlserver"/>
-  </queries>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.BLUETOOTH"/>
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-  <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <queries>
+        <package android:name="com.example.aldlserver" />
+    </queries>
 
-  <application
-    android:allowBackup="true"
-      android:name=".MyApp"
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:supportsRtl="true"
-      android:usesCleartextTraffic="true"
-    android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity"
-        android:exported="true">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <activity android:name="com.example.hogotest.bluetooth.BlueToothActivity" />
-    <activity android:name="com.example.hogotest.font.FontTestActivity" />
-    <activity android:name="com.example.hogotest.PerformanceOptimization.ThreadLeakTestActivity" />
-    <activity android:name="com.example.hogotest.webview.WebViewActivity" />
-      <activity android:name="com.example.hogotest.camerax.CameraxActivity" />
-      <activity android:name="com.example.hogotest.jni.JNIActivity" />
-      <activity android:name="com.example.hogotest.view.RecyclerViewTestActivity" />
-      <activity android:name="com.example.hogotest.glide.GlideTestActivity" />
-      <activity android:name="com.example.hogotest.room.RoomActivity" />
-    <activity android:name="com.example.hogotest.PerformanceOptimization.ClickAnrTest" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.hogotest.bluetooth.BlueToothActivity"  android:exported="true"/>
+        <activity android:name="com.example.hogotest.font.FontTestActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.PerformanceOptimization.ThreadLeakTestActivity" android:exported="true" />
+        <activity android:name="com.example.hogotest.webview.WebViewActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.camerax.CameraxActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.jni.JNIActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.view.RecyclerViewTestActivity" android:exported="true" />
+        <activity android:name="com.example.hogotest.glide.GlideTestActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.room.RoomActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.PerformanceOptimization.ClickAnrTest" android:exported="true" />
+        <activity android:name="com.example.hogotest.usage.UsageActivity" android:exported="true"/>
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+            android:exported="true">
+            <!-- Add any other necessary attributes -->
+        </activity>
 
 
-    <!-- <activity android:name=".JavaActivity" />-->
-  </application>
+
+        <!-- <activity android:name=".JavaActivity" />-->
+    </application>
 
 </manifest>

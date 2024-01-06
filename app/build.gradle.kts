@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId = "com.example.hogotest"
         minSdk = 24
-        targetSdk = 30
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -54,24 +54,24 @@ android {
 
     }
 
-    flavorDimensions += listOf("chanel","country")
-    productFlavors {
-       register("xiaomi"){
-           dimension = "chanel"
-           buildConfigField("String","name","xiaomi")
-
-       }
-        register("huawei"){
-            dimension = "chanel"
-        }
-
-        register("us"){
-            dimension = "country"
-        }
-        register("uk"){
-            dimension = "country"
-        }
-    }
+//    flavorDimensions += listOf("chanel","country")
+//    productFlavors {
+//       register("xiaomi"){
+//           dimension = "chanel"
+//           buildConfigField("String","name","xiaomi")
+//
+//       }
+//        register("huawei"){
+//            dimension = "chanel"
+//        }
+//
+//        register("us"){
+//            dimension = "country"
+//        }
+//        register("uk"){
+//            dimension = "country"
+//        }
+//    }
 
     buildTypes {
         release {
@@ -128,8 +128,9 @@ dependencies {
     implementation(Glide.compiler)
   //  implementation(Glide.okhttp3Integration)
     //implementation(Test.junit)
-    implementation(AndroidX.Test.Ext.junit)
-
+  //  implementation(AndroidX.Test.Ext.junit)
+    val composeBom = platform(Compose.bom)
+    implementation(composeBom)
     implementation(Coroutines.android)
     implementation(Compose.ui)
     implementation (Compose.foundation)
@@ -154,7 +155,8 @@ dependencies {
     implementation(Room.ktx)
 
     implementation(Retrofit.retrofit)
-    androidTestImplementation("androidx.test:runner:1.2.0")
+    implementation(com.example.bui.UtilsCode)
+    androidTestImplementation("androidx.test:runner:1.5.2")
     implementation(project(":mycommon"))
     implementation(com.example.bui.OcrChinese)
     implementation(Camerax.camera2)
