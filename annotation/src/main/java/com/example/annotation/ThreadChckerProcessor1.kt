@@ -4,11 +4,8 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
-import com.google.devtools.ksp.processing.SymbolProcessorProvider
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
-import com.google.devtools.ksp.symbol.KSVisitor
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import org.objectweb.asm.Label
 import org.objectweb.asm.MethodVisitor
@@ -18,7 +15,7 @@ import org.objectweb.asm.Opcodes
 
 
 
-class ThreadCheckerProcessor(
+class ThreadCheckerProcessor1(
     val codeGenerator: CodeGenerator,
     val logger: KSPLogger
 ) : SymbolProcessor {
@@ -43,6 +40,7 @@ class KSPVisitor(
     private val logger: KSPLogger
 ) : KSVisitorVoid() {
     override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
+        println("lalala"+function.qualifiedName?.asString())
         val mv = ASMVisitor(codeGenerator, method, logger)
         mv.visitCode()
         mv.visitEnd()
@@ -55,25 +53,35 @@ class ASMVisitor(
     val method: KSFunctionDeclaration,
     private val logger: KSPLogger
 ) : MethodVisitor(Opcodes.ASM9) {
+
+    override fun visitMethodInsn(
+        opcode: Int,
+        owner: String?,
+        name: String?,
+        descriptor: String?,
+        isInterface: Boolean
+    ) {
+        super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
+    }
     override fun visitCode() {
         super.visitCode()
         val threadName =
             method.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments?.get(0)?.value
-        mv.visitFieldInsn(
+        visitFieldInsn(
             Opcodes.GETSTATIC,
             "java/lang/Thread",
             "currentThread",
             "Ljava/lang/Thread;"
         )
-        mv.visitMethodInsn(
+        visitMethodInsn(
             Opcodes.INVOKEVIRTUAL,
             "java/lang/Thread",
             "getName",
             "()Ljava/lang/String;",
             false
         )
-        mv.visitLdcInsn(threadName)
-        mv.visitMethodInsn(
+        visitLdcInsn(threadName)
+        visitMethodInsn(
             Opcodes.INVOKEVIRTUAL,
             "java/lang/String",
             "equals",
@@ -81,10 +89,10 @@ class ASMVisitor(
             false
         )
         val labelEnd = Label()
-        mv.visitJumpInsn(Opcodes.IFEQ, labelEnd)
+        visitJumpInsn(Opcodes.IFEQ, labelEnd)
         //log error
-        mv.visitLdcInsn("Method ${method.simpleName.asString()} must be called from thread $threadName but was called from ${Thread.currentThread().name}")
-        mv.visitMethodInsn(
+        visitLdcInsn("Method ${method.simpleName.asString()} must be called from thread $threadName but was called from ${Thread.currentThread().name}")
+        visitMethodInsn(
             Opcodes.INVOKEVIRTUAL,
             "java/io/PrintStream",
             "println",
@@ -93,7 +101,7 @@ class ASMVisitor(
         )
 
         // Continue with original method code
-        mv.visitLabel(labelEnd)
+        visitLabel(labelEnd)
 
 
     }

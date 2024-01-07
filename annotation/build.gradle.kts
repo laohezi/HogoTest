@@ -3,9 +3,15 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
 }
 
+
 dependencies {
     implementation(kotlin("stdlib", "1.9.21"))
+    implementation ("org.jetbrains.kotlin:kotlin-reflect:1.9.21")
+
+
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
+  //  implementation ("com.google.devtools.ksp:symbol-processing-extensions:1.9.21-1.0.15")
+
 
     // ASM
     implementation("org.ow2.asm:asm:9.3")
@@ -13,6 +19,6 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

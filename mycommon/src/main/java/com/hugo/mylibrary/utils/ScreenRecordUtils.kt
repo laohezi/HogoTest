@@ -18,6 +18,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -166,6 +167,7 @@ class ScreenRecorder(val activity: ComponentActivity) : LifecycleObserver {
             Log.i(TAG, "Service onCreate() is called")
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
             // TODO Auto-generated method stub
             Log.i(TAG, "Service onStartCommand() is called")
@@ -195,6 +197,7 @@ class ScreenRecorder(val activity: ComponentActivity) : LifecycleObserver {
             )
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         private fun createMediaRecorder(): MediaRecorder {
 
 
@@ -290,17 +293,17 @@ class ScreenRecorder(val activity: ComponentActivity) : LifecycleObserver {
                     this,
                     0,
                     nfIntent,
-                    0
+                    PendingIntent.FLAG_UPDATE_CURRENT
                 )
             ) // 设置PendingIntent
                 .setLargeIcon(
                     BitmapFactory.decodeResource(
                         this.resources,
-                        R.drawable.utils_toast_bg
+                        com.blankj.utilcode.R.drawable.utils_toast_bg
                     )
                 ) // 设置下拉列表中的图标(大图标)
                 //.setContentTitle("SMI InstantView") // 设置下拉列表里的标题
-                .setSmallIcon(R.drawable.utils_toast_bg) // 设置状态栏内的小图标
+                .setSmallIcon(com.blankj.utilcode.R.drawable.utils_toast_bg) // 设置状态栏内的小图标
                 .setContentText("is running......") // 设置上下文内容
                 .setWhen(System.currentTimeMillis()) // 设置该通知发生的时间
 

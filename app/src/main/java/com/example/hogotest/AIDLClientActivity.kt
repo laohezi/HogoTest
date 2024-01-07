@@ -1,19 +1,9 @@
 package com.example.hogotest
 
-import android.content.ComponentName
-import android.content.Intent
-import android.content.ServiceConnection
-import android.os.Bundle
-import android.os.IBinder
-import android.util.Log
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.example.aldlserver.IPlayer
-import me.jessyan.autosize.external.ExternalAdaptManager
-import kotlin.concurrent.thread
 
 class AIDLClientActivity :AppCompatActivity(){
+/*
 
     lateinit var player:IPlayer
 
@@ -47,6 +37,7 @@ class AIDLClientActivity :AppCompatActivity(){
         bindService(intent, serviceConnection, BIND_AUTO_CREATE)
 
     }
+*/
 
 
 

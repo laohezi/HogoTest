@@ -109,7 +109,7 @@ class OutAdapterView(context: Context, attributeSet: AttributeSet?) :
             )
         }
         title = TextView(context)
-        title.id = R.id.title
+
 
         recyclerView = InnerRecyclerView(context).apply {
           layoutParams = LayoutParams(

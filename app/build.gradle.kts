@@ -13,14 +13,14 @@ plugins {
 
 android {
 
-    buildToolsVersion = "33"
+    buildToolsVersion = "34"
    // buildSdkVersion = 30
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.hogotest"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -35,18 +35,20 @@ android {
     buildFeatures {
         // Enables Jetpack Compose for this module
         compose = true
+        dataBinding = false
+        viewBinding = true
     }
 
 
     // Set both the Java and Kotlin compilers to target Java 8.
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     composeOptions {

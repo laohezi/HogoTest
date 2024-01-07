@@ -6,6 +6,6 @@ import com.google.devtools.ksp.processing.SymbolProcessorProvider
 
 class ThreadCheckerProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        return ThreadCheckerProcessor(environment.codeGenerator, environment.logger)
+        return ThreadCheckerProcessor(environment.logger, environment.options, environment.codeGenerator, )
     }
 }

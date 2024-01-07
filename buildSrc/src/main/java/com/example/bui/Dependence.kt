@@ -3,9 +3,9 @@ package com.example.bui
 
 object Compose {
     const val snapshot = ""
-    const val version = "1.3.1"
+    const val version = "1.5.6"
 
-    const val bom = "androidx.compose:compose-bom:2023.01.00"
+    const val bom = "androidx.compose:compose-bom:2023.10.01"
 
     const val foundation = "androidx.compose.foundation:foundation"
     const val animation = "androidx.compose.animation:animation"

@@ -14,9 +14,9 @@ import com.example.annotation.ThreadChecker
 import com.example.hogotest.databinding.ActivityFontTestBinding
 
 class FontTestActivity :AppCompatActivity(){
-    lateinit var  binding :ActivityFontTestBinding
+    lateinit var  binding : ActivityFontTestBinding
     val string = "t"
-    @ThreadChecker("back")
+    @ThreadChecker("test2")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFontTestBinding.inflate(LayoutInflater.from(this))
