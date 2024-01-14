@@ -1,4 +1,10 @@
 package com.example.annotation
+import com.android.build.api.instrumentation.AsmClassVisitorFactory
+import com.android.build.api.instrumentation.ClassContext
+import com.android.build.api.instrumentation.ClassData
+import com.android.build.api.instrumentation.InstrumentationContext
+import com.android.build.api.instrumentation.InstrumentationParameters
+import com.google.devtools.ksp.getVisibility
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
 import com.google.devtools.ksp.processing.*
@@ -6,6 +12,7 @@ import com.google.devtools.ksp.symbol.*
 import com.google.devtools.ksp.symbol.Modifier
 import com.google.devtools.ksp.symbol.Modifier.*
 import com.google.devtools.ksp.symbol.KSFile
+import org.gradle.api.provider.Property
 
 
 import org.objectweb.asm.*
@@ -33,15 +40,13 @@ class ThreadCheckerProcessor(
             logger.warn("Found @ThreadChecker annotation on method: ${function.simpleName.asString()} in class: ${function.containingFile?.javaClass?.simpleName}")
 
             val containingFile = function.containingFile ?: continue
-
-            val containingClass = containingFile.javaClass.declaringClass ?: continue
-            val className = containingClass.simpleName
+            val classKSClassDeclaration = containingFile.declarations.firstOrNull { it is KSClassDeclaration && it.declarations.contains(function) } ?: continue
+            val containingClass = classKSClassDeclaration.javaClass.simpleName
             val methodName = function.simpleName.asString()
 
-           val threadName = function.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments
-
+           val threadName = function.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments?.firstOrNull { it.name?.asString() == "threadName" }?.value
             if (threadName != null) {
-                logger.warn("Found @ThreadChecker annotation on method: $methodName in class: $className")
+                logger.warn("Found @ThreadChecker annotation on method: ${function.simpleName} in class: $containingClass")
 
                 // Read the original class bytecode
                 val classFile = File(containingFile.filePath)
@@ -135,6 +140,8 @@ class ThreadCheckerProcessor(
         return emptyList()
     }
 
+
+
     private fun findContainingClass(
         containingFile: KSFile,
         containingClass: KSClassDeclaration
@@ -150,3 +157,6 @@ class ThreadCheckerProcessor(
 
     override fun finish() {}
 }
+
+
+
