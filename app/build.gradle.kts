@@ -13,14 +13,14 @@ plugins {
 
 android {
 
-    buildToolsVersion = "34"
+    buildToolsVersion = Sdk.buildToolsVersion
    // buildSdkVersion = 30
-    compileSdk = 34
+    compileSdk = Sdk.compileSdkVersion
 
     defaultConfig {
         applicationId = "com.example.hogotest"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = Sdk.minSdkVersion
+        targetSdk = Sdk.targetSdkVersion
         versionCode = 1
         versionName = "1.0"
 
@@ -43,12 +43,12 @@ android {
     // Set both the Java and Kotlin compilers to target Java 8.
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = Jdk.sourceCompatibility
+        targetCompatibility = Jdk.targetCompatibility
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = Jdk.kotlinJvmTarget
     }
 
     composeOptions {
@@ -123,11 +123,11 @@ android {
 
 dependencies {
     // fileTree("dir" to "libs","include" to  )
-    implementation(Kotlin.stdlib)
+   // implementation(Kotlin.stdlib)
     implementation(AndroidX.coreKtx)
     implementation(Coroutines.core)
     implementation(AndroidX.appcompat)
-    implementation(AndroidX.constrainLayout)
+    implementation(AndroidX.constrainlayout)
     implementation(AndroidX.RecyclerView.recyclerView)
 
     implementation(Glide.glide)
@@ -164,7 +164,7 @@ dependencies {
 
     implementation(Retrofit.retrofit)
     implementation(com.example.bui.UtilsCode)
-    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation(AndroidX.Test.runner)
 
     implementation(com.example.bui.OcrChinese)
     implementation(Camerax.camera2)
@@ -174,8 +174,8 @@ dependencies {
     implementation(Camerax.cameraExtension)
     implementation(Camerax.cameraVideo)
     implementation(Camerax.barcode)
-    implementation(com.example.bui.UtilsCode)
-    implementation ("com.google.guava:guava:31.0.1-android")
+    implementation(UtilsCode)
+    implementation (Guava.android)
     implementation(project(":mycommon"))
     implementation(project(":annotation"))
     ksp(project(":annotation"))

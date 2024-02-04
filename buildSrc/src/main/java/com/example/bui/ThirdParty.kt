@@ -38,3 +38,8 @@ const val AndroidAutoSize = "com.github.JessYanCoding:AndroidAutoSize:v1.2.1"
 
 
 const val OcrChinese = "com.google.mlkit:text-recognition-chinese:16.0.0"
+
+object Guava {
+    const val android = "com.google.guava:guava:31.1-android"
+}
+

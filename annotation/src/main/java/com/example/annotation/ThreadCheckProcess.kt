@@ -33,18 +33,27 @@ class ThreadCheckerProcessor(
     @Suppress("NewApi")
     override fun process(resolver: Resolver): List<KSAnnotated> {
 
-        val annotatedFunctions = resolver.getSymbolsWithAnnotation(ThreadChecker::class.qualifiedName!!)
-            .filterIsInstance<KSFunctionDeclaration>()
+        return emptyList()
+
+    }
+
+    private fun doProcess(resolver: Resolver): List<KSAnnotated> {
+        val annotatedFunctions =
+            resolver.getSymbolsWithAnnotation(ThreadChecker::class.qualifiedName!!)
+                .filterIsInstance<KSFunctionDeclaration>()
 
         for (function in annotatedFunctions) {
             logger.warn("Found @ThreadChecker annotation on method: ${function.simpleName.asString()} in class: ${function.containingFile?.javaClass?.simpleName}")
 
             val containingFile = function.containingFile ?: continue
-            val classKSClassDeclaration = containingFile.declarations.firstOrNull { it is KSClassDeclaration && it.declarations.contains(function) } ?: continue
+            val classKSClassDeclaration = containingFile.declarations.firstOrNull {
+                it is KSClassDeclaration && it.declarations.contains(function)
+            } ?: continue
             val containingClass = classKSClassDeclaration.javaClass.simpleName
             val methodName = function.simpleName.asString()
 
-           val threadName = function.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments?.firstOrNull { it.name?.asString() == "threadName" }?.value
+            val threadName =
+                function.annotations.find { it.shortName.asString() == "ThreadChecker" }?.arguments?.firstOrNull { it.name?.asString() == "threadName" }?.value
             if (threadName != null) {
                 logger.warn("Found @ThreadChecker annotation on method: ${function.simpleName} in class: $containingClass")
 
@@ -67,15 +76,16 @@ class ThreadCheckerProcessor(
                         signature: String?,
                         exceptions: Array<out String>?
                     ): MethodVisitor {
-                        val methodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions)
+                        val methodVisitor =
+                            super.visitMethod(access, name, descriptor, signature, exceptions)
 
-                        if (name == methodName ) {
+                        if (name == methodName) {
                             // Generate the ASM code to check the thread name
                             val asmCode = """
-                                |if (!Thread.currentThread().name.equals("$threadName")) {
-                                |    throw new IllegalStateException("Method $methodName must be called on thread $threadName");
-                                |}
-                            """.trimMargin()
+                                    |if (!Thread.currentThread().name.equals("$threadName")) {
+                                    |    throw new IllegalStateException("Method $methodName must be called on thread $threadName");
+                                    |}
+                                """.trimMargin()
 
                             // Create a MethodVisitor to visit and modify the method bytecode
                             return object : MethodVisitor(ASM9, methodVisitor) {
@@ -139,7 +149,6 @@ class ThreadCheckerProcessor(
 
         return emptyList()
     }
-
 
 
     private fun findContainingClass(

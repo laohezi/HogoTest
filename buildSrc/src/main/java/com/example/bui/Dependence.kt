@@ -1,6 +1,9 @@
 package com.example.bui
 
 
+
+
+
 object Compose {
     const val snapshot = ""
     const val version = "1.5.6"
@@ -34,7 +37,12 @@ object Compose {
 }
 
 object Test {
-    const val junit = "junit:junit:4.12"
+   val  junit = "junit:junit:4.13.2"
+}
+
+object Material {
+    private const val version = "1.11.0"
+    const val material = "com.google.android.material:material:$version"
 }
 
 object  Room {
@@ -53,7 +61,7 @@ object Paging {
 object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.7.0-alpha02"
     const val coreKtx = "androidx.core:core-ktx:1.7.0"
-    const val constrainLayout = "androidx.constraintlayout:constraintlayout:2.1.3"
+    const val constrainlayout = "androidx.constraintlayout:constraintlayout:2.1.3"
     const val  activityKtx = "androidx.activity:activity-ktx:1.2.2"
 
     object Activity {
@@ -71,7 +79,7 @@ object AndroidX {
         private const val version = "1.4.0"
         const val core = "androidx.test:core:$version"
         const val rules = "androidx.test:rules:$version"
-
+        const val runner = "androidx.test:runner:$version"
         object Ext {
             private const val version = "1.1.2"
             const val junit = "androidx.test.ext:junit-ktx:$version"
@@ -99,6 +107,7 @@ object Kotlin {
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
     const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
+    const val reflection = "org.jetbrains.kotlin:kotlin-reflect:$version"
 }
 
 object Coroutines {
@@ -108,9 +117,6 @@ object Coroutines {
     const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
 }
 
-object Junit {
-
-}
 
 object Camerax{
     private  val camerax_version = "1.3.0-alpha04"

@@ -8,12 +8,12 @@ plugins {
 
 
 android {
-    buildToolsVersion= "33"
-    compileSdk = 33
+    buildToolsVersion= Sdk.buildToolsVersion
+    compileSdk =Sdk.compileSdkVersion
     defaultConfig {
         applicationId = "com.example.jetnews1"
-        minSdk= 21
-        targetSdk =32
+        minSdk= Sdk.minSdkVersion
+        targetSdk =Sdk.targetSdkVersion
         versionCode =1
         versionName ="1.0"
         vectorDrawables.useSupportLibrary = true
@@ -44,12 +44,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility =JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility =Jdk.sourceCompatibility
+        targetCompatibility = Jdk.targetCompatibility
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = Jdk.kotlinJvmTarget
     }
 
     buildFeatures {
@@ -128,7 +128,7 @@ dependencies {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
     kotlinOptions {
         // Set JVM target to 1.8
-        jvmTarget = "1.8"
+        jvmTarget = Jdk.kotlinJvmTarget
     }
 }
 

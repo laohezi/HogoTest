@@ -1,15 +1,21 @@
+import com.example.bui.AndroidX
+import com.example.bui.Jdk
+import com.example.bui.Material
+import com.example.bui.Sdk
+import com.example.bui.Test
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Sdk.compileSdkVersion
 
     defaultConfig {
         applicationId = "com.example.com.example.aldlserver"
-        minSdk = 21
-        targetSdk = 32
+        minSdk = Sdk.minSdkVersion
+        targetSdk = Sdk.targetSdkVersion
         versionCode = 1
         versionName = "1.0"
 
@@ -26,21 +32,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = Jdk.sourceCompatibility
+        targetCompatibility = Jdk.targetCompatibility
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = Jdk.kotlinJvmTarget
     }
     namespace = "com.example.aldlserver"
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.3.0")
-    implementation("com.google.android.material:material:1.4.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appcompat)
+    implementation(Material.material)
+    testImplementation(Test.junit)
+
 }
