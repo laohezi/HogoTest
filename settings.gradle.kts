@@ -13,7 +13,7 @@ dependencyResolutionManagement {
 
 }
 include("aldlserver")
-include(":nativelib")
+//include(":nativelib")
 //include(":filemanager")
 include(":mycommon")
 include(":plugins")

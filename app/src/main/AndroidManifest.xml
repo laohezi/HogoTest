@@ -42,7 +42,6 @@
         <activity android:name="com.example.hogotest.PerformanceOptimization.ThreadLeakTestActivity" android:exported="true" />
         <activity android:name="com.example.hogotest.webview.WebViewActivity" android:exported="true"/>
         <activity android:name="com.example.hogotest.camerax.CameraxActivity" android:exported="true"/>
-        <activity android:name="com.example.hogotest.jni.JNIActivity" android:exported="true"/>
         <activity android:name="com.example.hogotest.view.RecyclerViewTestActivity" android:exported="true" />
         <activity android:name="com.example.hogotest.glide.GlideTestActivity" android:exported="true"/>
         <activity android:name="com.example.hogotest.room.RoomActivity" android:exported="true"/>

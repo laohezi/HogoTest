@@ -1,24 +1,14 @@
-package com.example.hogotest.jni
+package com.example.nativelib
 
+import android.app.Activity
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.repeatOnLifecycle
-import com.example.nativelib.NativeLib
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
-class JNIActivity :AppCompatActivity(){
+class JNIActivity : Activity(){
     val nativeLib = NativeLib()
     val data = MutableLiveData("")
 
@@ -30,7 +20,7 @@ class JNIActivity :AppCompatActivity(){
         textView = TextView(this,null)
         var text = "yuanshi"
         nativeLib.errorInJava()
-       text = nativeLib.stringFromJNIObject()
+        text = nativeLib.stringFromJNIObject()
         try {
 
 
@@ -56,16 +46,11 @@ class JNIActivity :AppCompatActivity(){
         val liveData = MutableLiveData<String>()
         liveData.value = ""
 
-       // startActivity()
+        // startActivity()
 
 
     }
-
-
-
-
 }
-
 
 
 fun View.rPrintlnParent(){

@@ -168,7 +168,7 @@ dependencies {
     implementation (Compose.runtimeLivedata)
     implementation(AndroidX.Activity.activityCompose)
     debugImplementation(LeakCannary)
-    implementation(project(":nativelib"))
+ //   implementation(project(":nativelib"))
     implementation(Glide.glide)
     implementation(com.example.bui.BRVAH)
    // implementation(AndroidX)
