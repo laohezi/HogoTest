@@ -8,9 +8,13 @@ evaluate(new File(
         settingsDir.parentFile,
         'flutter_module/.android/include_flutter.groovy'
 ))*/
+
+dependencyResolutionManagement {
+
+}
 include("aldlserver")
 include(":nativelib")
 //include(":filemanager")
 include(":mycommon")
 include(":plugins")
-include(":annotation")
+//include(":annotation")

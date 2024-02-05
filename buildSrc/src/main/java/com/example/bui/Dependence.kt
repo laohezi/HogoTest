@@ -104,7 +104,7 @@ object AndroidX {
 
 object Kotlin {
     const val version = "1.9.21"
-    const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
+    const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk17:$version"
     const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
     const val reflection = "org.jetbrains.kotlin:kotlin-reflect:$version"
@@ -119,7 +119,7 @@ object Coroutines {
 
 
 object Camerax{
-    private  val camerax_version = "1.3.0-alpha04"
+    private const val camerax_version = "1.3.0-alpha04"
     val camera2 = "androidx.camera:camera-camera2:${camerax_version}"
     val lifecycle = "androidx.camera:camera-lifecycle:${camerax_version}"
     val cameraVideo = "androidx.camera:camera-video:${camerax_version}"

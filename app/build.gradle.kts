@@ -1,4 +1,5 @@
 
+import com.android.tools.build.jetifier.processor.isSignatureFile
 import com.example.bui.*
 
 plugins {
@@ -38,7 +39,24 @@ android {
         dataBinding = false
         viewBinding = true
     }
+   signingConfigs {
+       val useHome = System.getProperty("user.home")
+       val file = File("$useHome/.android/daye.keystore")
+      getByName("debug"){
+           storeFile = file
+           storePassword = "yoxisinei145"
+           keyAlias = "daye"
+           keyPassword = "yoxisinei145"
+       }
 
+//       create("release"){
+//           storeFile = file
+//           storePassword = "yoxisinei145"
+//           keyAlias = "daye"
+//           keyPassword = "yoxisinei145"
+//       }
+
+   }
 
     // Set both the Java and Kotlin compilers to target Java 8.
 
@@ -177,8 +195,8 @@ dependencies {
     implementation(UtilsCode)
     implementation (Guava.android)
     implementation(project(":mycommon"))
-    implementation(project(":annotation"))
-    ksp(project(":annotation"))
+   // implementation(project(":annotation"))
+   // ksp(project(":annotation"))
 
 
 

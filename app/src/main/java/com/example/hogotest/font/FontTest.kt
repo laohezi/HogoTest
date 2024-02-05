@@ -1,22 +1,19 @@
 package com.example.hogotest.font
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import com.example.annotation.ThreadChecker
 import com.example.hogotest.databinding.ActivityFontTestBinding
 
 class FontTestActivity :AppCompatActivity(){
     lateinit var  binding : ActivityFontTestBinding
     val string = "t"
-    @ThreadChecker("test2")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFontTestBinding.inflate(LayoutInflater.from(this))

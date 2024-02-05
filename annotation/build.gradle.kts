@@ -10,11 +10,11 @@ plugins {
 
 dependencies {
     implementation(gradleApi())
-    implementation(kotlin("stdlib", "1.8.20"))
+    implementation(Kotlin.stdlib)
     implementation (Kotlin.reflection)
     implementation("com.android.tools.build:gradle-api:8.2.1")
 
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.20-1.0.11")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
   //  implementation ("com.google.devtools.ksp:symbol-processing-extensions:1.9.21-1.0.15")
 
 
