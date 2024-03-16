@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity.MEDIA_PROJECTION_SERVICE
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -111,7 +112,7 @@ class ScreenRecorder(val activity: ComponentActivity) : LifecycleObserver {
 
 
         val mediaProjectionManager =
-            activity.getSystemService(AppCompatActivity.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+            activity.getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         val permissionIntent = mediaProjectionManager.createScreenCaptureIntent()
 
         screenRecordLauncher?.launch(permissionIntent)

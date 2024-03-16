@@ -24,6 +24,7 @@ fun MyBasicColumn(
 
     Layout(modifier = modifier,content = content){ measurables,constraints->
         val placeables = measurables.map {
+
             it.measure(constraints)
         }
         layout(constraints.maxWidth,constraints.maxHeight){

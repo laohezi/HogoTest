@@ -78,7 +78,7 @@ fun <T> SavedStateHandle.getMutableStateOf(
 }
 
 
-@ExperimentalPagerApi
+
 @Composable
 fun NavGraph(
     navHostController: NavHostController = rememberNavController(),
@@ -105,7 +105,7 @@ fun ListRoute(
     ListPage(viewModel,navHostController)
 }
 
-@ExperimentalPagerApi
+
 @Composable
 fun DetailRoute(
     viewModel: SeriesPcuDetailViewModel,
@@ -113,3 +113,5 @@ fun DetailRoute(
 ) {
     DetailPage(viewModel, onBack)
 }
+
+

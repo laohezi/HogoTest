@@ -20,20 +20,29 @@ android {
         testInstrumentationRunner= "androidx.test.runner.AndroidJUnitRunner"
     }
 
-   /* signingConfigs {
-        // We use a bundled debug keystore, to allow debug builds from CI to be upgradable
-        debug {
-            storeFile = rootProject.file("debug.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
+    signingConfigs {
+        val useHome = System.getProperty("user.home")
+        val file = File("$useHome/.android/daye.keystore")
+        getByName("debug"){
+            storeFile = file
+            storePassword = "yoxisinei145"
+            keyAlias = "daye"
+            keyPassword = "yoxisinei145"
         }
-    }*/
+
+//       create("release"){
+//           storeFile = file
+//           storePassword = "yoxisinei145"
+//           keyAlias = "daye"
+//           keyPassword = "yoxisinei145"
+//       }
+
+    }
 
     buildTypes {
 
         debug {
-            signingConfig = signingConfigs.getByName("debug")
+            //signingConfig = signingConfigs.getByName("debug")
 
         }
 

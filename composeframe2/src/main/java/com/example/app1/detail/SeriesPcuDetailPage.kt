@@ -6,6 +6,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -26,14 +28,13 @@ import com.example.app1.R
 import com.example.app1.Screen
 import com.google.accompanist.glide.rememberGlidePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.rememberPagerState
+
 import org.json.JSONObject
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@ExperimentalPagerApi
+
 @Composable
 fun DetailPage(
     viewModel: SeriesPcuDetailViewModel,
@@ -70,7 +71,9 @@ fun DetailPage(
                 LiveBannerView(this as JSONObject)
             }
             viewModel.pageData.samples.observeAsState().value?.apply {
-                SampleLooper(datas = this)
+                if (this.isNotEmpty()) {
+                    SampleLooper(datas = this)
+                }
             }
 
             viewModel.pageData.options.observeAsState().value?.firstOrNull()?.apply {
@@ -83,26 +86,23 @@ fun DetailPage(
 }
 
 
-@ExperimentalPagerApi
+
 @Composable
 fun SampleLooper(datas: MutableList<SeriesPcuDetailSampleItem>) {
-    val pageState = rememberPagerState()
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        HorizontalPager(datas.size) {
-            datas!!.forEach { data ->
-                Image(
-                    painter = rememberGlidePainter(request = data.sampleUrl),
-                    contentDescription = "lal",
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp, vertical = 10.dp)
-                        .aspectRatio(1.0f)
-                )
-            }
-        }
+    val pageState = rememberPagerState(initialPage = 0, pageCount = { datas.size })
+        HorizontalPager(pageState) {
+            val data = datas[it]
+                Column {
+                    Image(
+                        painter = rememberGlidePainter(request = data.sampleUrl),
+                        contentDescription = "lal",
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp, vertical = 10.dp)
+                            .aspectRatio(1.0f)
+                    )
+                    Text(text = data.sampleUrl)
+                }
 
-        HorizontalPagerIndicator(
-            pagerState = pageState
-        )
     }
 }
 
@@ -129,7 +129,7 @@ fun OptionsView(item: SeriesPcuCategoryItem) {
                     item = sn,
                     onClick = { c ->
                         selectPosition = index
-                        if (c.childs.isNotEmpty()){
+                        if (c.childs.isNotEmpty()) {
                             child = c
                         }
                     })

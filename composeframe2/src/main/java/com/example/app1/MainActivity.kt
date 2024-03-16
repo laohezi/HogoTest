@@ -21,8 +21,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 
 class MainActivity : AppCompatActivity() {
-    private val  navigationViewModel by viewModels<NavigationViewModel>()
-    @OptIn(ExperimentalPagerApi::class)
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,12 +30,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-       /* if (!navigationViewModel.onBack()){
-            super.onBackPressed()
-        }*/
-
-    }
 }
 
 /*@ExperimentalPagerApi

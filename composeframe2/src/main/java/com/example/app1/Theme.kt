@@ -13,7 +13,11 @@ fun MyTheme(
     content: Content
 ) {
     MaterialTheme(
-        colors = LightThemesColors,
+        colors = if (drak){
+            DarkThemeColors
+                          }else{
+                              LightThemesColors
+                          },
         content = content
     )
 }
@@ -28,7 +32,7 @@ val LightThemesColors = lightColors(
 )
 
 val DarkThemeColors = darkColors(
-    primary = Color(0xff000000)
+
 )
 
 typealias Content = @Composable () -> Unit

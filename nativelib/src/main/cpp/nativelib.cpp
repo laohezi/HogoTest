@@ -94,16 +94,16 @@ Java_com_example_nativelib_NativeLib_getSecondNumberFromJNI(JNIEnv *env, jobject
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_nativelib_NativeLib_errorInJava(JNIEnv *env, jobject thiz) {
-    jclass  eclz = env->FindClass("java/lang/Exception") ;
     jclass  jc = env->FindClass("com/example/nativelib/NativeObject");
     jmethodID  constructId = env->GetMethodID(jc,"<init>","()V");
     jobject  obj = env->NewObject(jc,constructId);
     jmethodID errorMethodId = env->GetMethodID(jc, "kError", "(Ljava/lang/String;)V");
+    jclass  eclz = env->FindClass("java/lang/Exception") ;
     env->CallVoidMethod(obj, errorMethodId, env->NewStringUTF("error from java"));
     if (env->ExceptionCheck() ){
         env->ExceptionDescribe();
         env->ExceptionClear();
-       // env->ThrowNew(eclz,"haha,我从java 绕道c 又回来了");
+        env->ThrowNew(eclz,"haha,我从java 绕道c 又回来了");
         return;
     }
     return;

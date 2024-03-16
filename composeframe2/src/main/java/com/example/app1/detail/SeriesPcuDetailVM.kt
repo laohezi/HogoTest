@@ -2,6 +2,7 @@ package com.example.app1.detail
 
 import SeriesPcuCategoryItem
 import SeriesPcuModel.jsonToCategory
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,6 +38,7 @@ class SeriesPcuDetailViewModel : ViewModel() {
             reset()
         }*/
         //currentId = selectedId!!
+        Log.e("init data","lalalaal")
         viewModelScope.launch(coroutineExceptionHandler) {
             pageState.value = PageState.Loading
             try {

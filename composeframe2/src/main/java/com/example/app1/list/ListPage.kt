@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.example.app1.Screen
@@ -68,7 +70,8 @@ fun ListPage(
                         }
                         items(_viewModel.items.size) { index ->
                             InnerList(item = _viewModel.items[index], onItemClick = {
-                                navController.navigate(Screen.DetailScreen.toString())
+                                navController.navigate(Screen.DetailScreen.toString(),
+                                    )
                             })
                         }
                     }
@@ -122,7 +125,7 @@ fun PcuItemAdapter(item: SeriesPcuCategoryItem, modifier: Modifier, onClick: (()
     ) {
 
         item.thumbnails.firstOrNull()?.let {
-            BoxWithConstraints() {
+            Box() {
                 ImageWithLoading(
                     url = it, imageViewModifier = Modifier
                         .fillMaxWidth()
@@ -207,7 +210,6 @@ fun ImageWithLoading(url: String, imageViewModifier: Modifier) {
             contentScale = ContentScale.Crop
         )
         when (painter.state) {
-
             is ImagePainter.State.Loading -> {
                 CircularProgressIndicator(Modifier.align(Alignment.Center))
             }
