@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+skinparam component{
+  FontSize 18
+  BackgroundColor #777700
+
+}
+skinparam package{
+backgroundColor #999999
+
+}
+
+[Scenario Manager] as sm #Yellow
+[context manager] as cm
+[App] as app
+[Lucy Rule Engine] as re
+package "Common lib"{
+
+    ["Annotation Processor"] as ap
+    [common lib] as cl
+    cl -->ap : api
+}
+
+
+
+
+
+
+app -left->sm :implementation
+app -->cm :implementation
+sm -->cm : implementation
+sm -->re : implementation
+cm--> cl :api
+
+
+
+
+
+
+
+
+@enduml

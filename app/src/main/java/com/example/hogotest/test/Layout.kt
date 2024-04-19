@@ -1,20 +1,18 @@
-package com.example.app1.test
+package com.example.hogotest.test
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalUnitApi::class)
+
 @Composable
 fun TwoTexts(
     text1: String,
@@ -28,11 +26,13 @@ fun TwoTexts(
                 .padding(start = 4.dp)
                 .wrapContentWidth(Alignment.Start),
             text = text1,
-            fontSize = TextUnit(20f, TextUnitType.Sp)
+            fontSize = TextUnit(30f, TextUnitType.Sp)
         )
         Divider(
             color = Color.Black,
-            modifier = Modifier.fillMaxHeight().width(1.dp)
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp)
         )
         Text(
             modifier = Modifier
@@ -43,10 +43,12 @@ fun TwoTexts(
         )
     }
 }
-@Preview
+
 @Composable
 fun TwoTextPreview(){
-    TwoTexts(text1 = "haha", text2 ="lala" )
+    MaterialTheme(){
+        TwoTexts(text1 = "haha", text2 ="lala" )
+    }
 
 }
 

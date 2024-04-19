@@ -1,20 +1,25 @@
-package com.example.app1.test
+package com.example.hogotest.test
 
+import android.content.res.Configuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 
-@Preview
+
+@Preview(uiMode =Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun MyBassicColumnPreview(){
-    MyBasicColumn() {
-        Text(text = "lalala")
-        Text(text = "hahaha")
-        Text(text = "yoyoyo")
-    }
-}
+
+      MyBasicColumn() {
+          Text(text = "lalala")
+          Text(text = "hahaha")
+          Text(text = "yoyoyo")
+      }
+  }
+
+
 
 @Composable
 fun MyBasicColumn(

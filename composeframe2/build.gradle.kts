@@ -78,6 +78,8 @@ android {
 }
 
 dependencies {
+    val composeBom = platform(Compose.bom)
+    implementation(composeBom)
     implementation(Coroutines.android)
     implementation(Compose.ui)
     implementation (Compose.foundation)
@@ -110,8 +112,7 @@ dependencies {
 
     androidTestImplementation ("androidx.test:rules:1.4.0")
     androidTestImplementation ("androidx.test:runner:1.4.0")
-    androidTestImplementation (Compose.test)
-    androidTestImplementation (Compose.uiTest)
+    //androidTestImplementation (Compose.uiTest)
 
 
     debugImplementation (Compose.uiTestManifest)

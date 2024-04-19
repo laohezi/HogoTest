@@ -20,7 +20,6 @@ object Compose {
     const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata"
     const val tooling = "androidx.compose.ui:ui-tooling"
     const val ui = "androidx.compose.ui:ui"
-    const val test = "androidx.compose.ui:ui-test"
     const val uiTest = "androidx.compose.ui:ui-test-junit4"
     const val uiTestManifest = "androidx.compose.ui:ui-test-manifest"
     /*const val uiUtil = "androidx.compose.ui:ui-util:$version"*/

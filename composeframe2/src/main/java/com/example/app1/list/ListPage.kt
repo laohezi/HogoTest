@@ -53,6 +53,7 @@ fun ListPage(
                 title = { Text(text = "FreePrints Frames") },
             )
         },
+
         content = {
 
             Column() {
