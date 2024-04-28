@@ -5,6 +5,8 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.usb.host"/>
     <queries>
         <package android:name="com.example.aldlserver" />
     </queries>
@@ -47,12 +49,15 @@
         <activity android:name="com.example.hogotest.room.RoomActivity" android:exported="true"/>
         <activity android:name="com.example.hogotest.PerformanceOptimization.ClickAnrTest" android:exported="true" />
         <activity android:name="com.example.hogotest.usage.UsageActivity" android:exported="true"/>
-        <activity
-            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-            android:exported="true">
-            <!-- Add any other necessary attributes -->
-        </activity>
 
+        <activity android:name="com.example.hogotest.usb.UsbActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+
+
+        </activity>
 
 
         <!-- <activity android:name=".JavaActivity" />-->

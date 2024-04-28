@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 
@@ -106,7 +107,7 @@ android {
 
     buildFeatures {
         viewBinding = true
-
+        aidl = true
 
     }
     applicationVariants.all {
@@ -195,8 +196,11 @@ dependencies {
     implementation(UtilsCode)
     implementation (Guava.android)
     implementation(project(":mycommon"))
+    implementation(Hilt.hilt)
+    kapt(Hilt.compiler)
    // implementation(project(":annotation"))
    // ksp(project(":annotation"))
+    implementation(project(":nativelib"))
 
 
 

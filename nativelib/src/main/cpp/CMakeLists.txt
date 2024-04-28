@@ -9,11 +9,14 @@ cmake_minimum_required(VERSION 3.22.1)
 
 project("nativelib")
 
+
+set(LIBUSB_DIR ${CMAKE_SOURCE_DIR}/libusb)
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
-
+add_subdirectory(${LIBUSB_DIR} libusb_build)
 add_library( # Sets the name of the library.
         nativelib
 
@@ -21,7 +24,9 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        nativelib.cpp)
+        nativelib.cpp
+        usb_test.cpp
+)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -45,4 +50,10 @@ target_link_libraries( # Specifies the target library.
 
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib})
+        ${log-lib}
+        libusb
+
+
+       )
+
+

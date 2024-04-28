@@ -1,9 +1,6 @@
 package com.example.bui
 
 
-
-
-
 object Compose {
     const val snapshot = ""
     const val version = "1.5.6"
@@ -23,9 +20,9 @@ object Compose {
     const val uiTest = "androidx.compose.ui:ui-test-junit4"
     const val uiTestManifest = "androidx.compose.ui:ui-test-manifest"
     /*const val uiUtil = "androidx.compose.ui:ui-util:$version"*/
-/*
-        const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
-*/
+    /*
+            const val viewBinding = "androidx.compose.ui:ui-viewbinding:$version"
+    */
 
     object Material3 {
         const val snapshot = ""
@@ -36,7 +33,7 @@ object Compose {
 }
 
 object Test {
-   val  junit = "junit:junit:4.13.2"
+    val junit = "junit:junit:4.13.2"
 }
 
 object Material {
@@ -44,7 +41,7 @@ object Material {
     const val material = "com.google.android.material:material:$version"
 }
 
-object  Room {
+object Room {
     private const val version = "2.5.1"
     const val runtime = "androidx.room:room-runtime:$version"
     const val compiler = "androidx.room:room-compiler:$version"
@@ -61,7 +58,7 @@ object AndroidX {
     const val appcompat = "androidx.appcompat:appcompat:1.7.0-alpha02"
     const val coreKtx = "androidx.core:core-ktx:1.7.0"
     const val constrainlayout = "androidx.constraintlayout:constraintlayout:2.1.3"
-    const val  activityKtx = "androidx.activity:activity-ktx:1.2.2"
+    const val activityKtx = "androidx.activity:activity-ktx:1.2.2"
 
     object Activity {
         const val activityCompose = "androidx.activity:activity-compose:1.4.0"
@@ -79,6 +76,7 @@ object AndroidX {
         const val core = "androidx.test:core:$version"
         const val rules = "androidx.test:rules:$version"
         const val runner = "androidx.test:runner:$version"
+
         object Ext {
             private const val version = "1.1.2"
             const val junit = "androidx.test.ext:junit-ktx:$version"
@@ -87,9 +85,9 @@ object AndroidX {
         const val espressoCore = "androidx.test.espresso:espresso-core:3.3.0"
     }
 
-    object RecyclerView{
+    object RecyclerView {
         private val version = "1.2.1"
-         val recyclerView = "androidx.recyclerview:recyclerview:$version"
+        val recyclerView = "androidx.recyclerview:recyclerview:$version"
     }
 
     object Lifecycle {
@@ -117,7 +115,7 @@ object Coroutines {
 }
 
 
-object Camerax{
+object Camerax {
     private const val camerax_version = "1.3.0-alpha04"
     val camera2 = "androidx.camera:camera-camera2:${camerax_version}"
     val lifecycle = "androidx.camera:camera-lifecycle:${camerax_version}"
@@ -128,8 +126,12 @@ object Camerax{
     val barcode = "com.google.mlkit:barcode-scanning:17.0.2"
 
 
+}
 
-
-
+object Hilt{
+    private  const val version = "2.28-alpha"
+    const val hilt = "com.google.dagger:hilt-android:$version"
+    const val compiler = "com.google.dagger:hilt-android-compiler:$version"
+    const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
 
 }

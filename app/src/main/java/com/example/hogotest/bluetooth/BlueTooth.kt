@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -16,12 +17,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
@@ -31,6 +37,7 @@ import kotlinx.coroutines.delay
 class BlueToothActivity : AppCompatActivity() {
     val viewModel by viewModels<BlueToothViewModel>()
     val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
     var permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions(
         )
@@ -44,7 +51,7 @@ class BlueToothActivity : AppCompatActivity() {
         viewModel.stateOpen = bluetoothAdapter.isEnabled
 
         setContent {
-            StopWatchTest()
+
         }
         permissionLauncher.launch(
             arrayOf(
@@ -92,103 +99,71 @@ class BlueToothActivity : AppCompatActivity() {
 }
 
 class BlueToothViewModel : ViewModel() {
+    var hasPermission by mutableStateOf(false)
     var stateOpen by mutableStateOf(false)
-
+    val devices = mutableStateListOf<BluetoothDevice>()
 
 }
 
-val key = "blue tooth"
-
-
-@Preview
 @Composable
-fun Bluetooth() {
-    Bluetooth(switchBlueTooth = { it ->
+fun StatedPage(viewModel: BlueToothViewModel,requestPermissionAction:()->Unit){
+    if (viewModel.hasPermission){
 
-
-    }, false)
-}
-
-
-@Composable
-fun Bluetooth(switchBlueTooth: (Boolean) -> Unit, viewModel: BlueToothViewModel) {
-
-    Column() {
-        Switch(checked = viewModel.stateOpen, onCheckedChange = {
-            switchBlueTooth(it)
-        })
+    }else{
+        RequestPermissionPage(requestPermissionAction)
     }
 }
 
-
 @Composable
-fun Bluetooth(switchBlueTooth: (Boolean) -> Unit, checked: Boolean) {
+fun RequestPermissionPage(requestPermissionAction: () -> Unit){
 
-    Column() {
-        Switch(checked = checked, onCheckedChange = {
-            switchBlueTooth(it)
-        })
-    }
-}
-
-@Preview
-@Composable
-fun StopWatchTest() {
-    val stopwatch = remember {
-        Stopwatch(10 * 1000)
-    }
-    var time by remember {
-        mutableStateOf(0L)
-    }
-    LaunchedEffect(key1 = stopwatch) {
-        while (true) {
-            time = stopwatch.getElapsedTime()
-            delay(100)
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Button(onClick = {
+            requestPermissionAction()
+        }) {
+            Text(text = "请求权限")
         }
     }
+}
 
+@Preview
+
+@Composable
+fun RequestPermissionPagePreview(){
+    RequestPermissionPage({})
+}
+
+
+
+@Preview
+@Composable
+fun BluetoothPagePreview() {
+
+}
+
+@Composable
+fun BluetoothPage(viewModel: BlueToothViewModel) {
+
+}
+
+
+@SuppressLint("MissingPermission")
+@Composable
+
+fun BluetoothDevice(device: BluetoothDevice){
     Column {
-        Row() {
-            Button(
-                onClick = {
-                    stopwatch.start()
-                }) {
-
-            }
-
-            Button(onClick = {
-                stopwatch.stop()
-            }) {}
-
-            Button(onClick = {
-                stopwatch.pause()
-            }) {}
-
-            Button(onClick = {
-                stopwatch.resume()
-            }) {}
-        }
-
-        Text(text = time.toString())
+      Text(text = device.name!!)
 
     }
 
+}
+
+@Composable
+@Preview
+fun BluetoothDevicePreview(){
 
 }
 
 
-class SingleTon {
-    companion object {
-        val instance by lazy {
-            SingleTon()
-        }
 
-    }
-
-    private constructor() {
-
-    }
-
-
-}
 

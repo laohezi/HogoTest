@@ -39,6 +39,10 @@ android {
         jvmTarget = Jdk.kotlinJvmTarget
     }
     namespace = "com.example.aldlserver"
+
+    buildFeatures {
+        aidl = true
+    }
 }
 
 dependencies {
@@ -46,6 +50,7 @@ dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appcompat)
     implementation(Material.material)
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
     testImplementation(Test.junit)
 
 }

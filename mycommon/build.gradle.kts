@@ -1,4 +1,5 @@
 import com.example.bui.AndroidX
+import com.example.bui.Hilt
 import com.example.bui.Jdk
 import com.example.bui.Sdk
 
@@ -6,6 +7,8 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
     //add ksp plugin
 }
 
@@ -41,11 +44,9 @@ android {
 
 dependencies {
 
-    implementation(com.example.bui.UtilsCode)
-    implementation(AndroidX.appcompat)
-
-
-
-
+    api(com.example.bui.UtilsCode)
+    api(AndroidX.appcompat)
+    implementation(Hilt.hilt)
+    kapt(Hilt.compiler)
 
 }
