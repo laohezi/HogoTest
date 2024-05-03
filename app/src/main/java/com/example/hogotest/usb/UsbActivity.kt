@@ -1,107 +1,170 @@
 package com.example.hogotest.usb
 
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbEndpoint
 import android.hardware.usb.UsbInterface
 import android.hardware.usb.UsbManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
+import com.example.nativelib.UsbLib
 import com.hugo.mylibrary.components.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.HashMap
 
 @AndroidEntryPoint
-class UsbActivity :BaseActivity(){
+class UsbActivity : BaseActivity() {
+    val actionUsbPermission = "com.example.hogotest.USB_PERMISSION"
+    val usbLib = UsbLib()
+    val usbManager by lazy {
+        getSystemService(USB_SERVICE) as UsbManager
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val usbDevices = resolveDevices()
         setContent {
-            UsbList(usbDevices = usbDevices)
+            UsbList(usbDevices = usbDevices, onClickDevice = { usbDevice ->
+                tryToOpenDevice(usbDevice)
+            })
+        }
+    }
+
+    suspend fun openDevice(usbDevice: UsbDevice) {
+        val connection = usbManager.openDevice(usbDevice)
+        if (connection != null) {
+            usbLib.openDevice(
+                usbDevice.vendorId,
+                usbDevice.productId,
+                connection.getFileDescriptor()
+            )
         }
     }
 
     fun resolveDevices(): HashMap<String, UsbDevice> {
-        val usbManager = getSystemService(USB_SERVICE) as UsbManager
         return usbManager.deviceList
     }
-}
-@Composable
-fun UsbList(usbDevices: Map<String,UsbDevice>){
-    LazyColumn {
-        items(usbDevices.size){index->
-            val entity = usbDevices.entries.toList()[index]
-            UsbItem(
-                key = entity.key,
-                usbDevice = entity.value)
+
+    fun tryToOpenDevice(usbDevice: UsbDevice) = CoroutineScope(Dispatchers.IO).launch {
+        if (!usbManager.hasPermission(usbDevice)) {
+            requestPermission(usbDevice)
+        } else {
+            openDevice(usbDevice)
+        }
+
+    }
+
+
+    fun requestPermission(usbDevice: UsbDevice) {
+        if (!usbManager.hasPermission(usbDevice)) {
+            val intentFiler = IntentFilter(actionUsbPermission)
+            registerReceiver(devicePermissionReceiver, intentFiler)
+            val pendingIntent = PendingIntent.getBroadcast(
+                this, 0, Intent(actionUsbPermission),
+                PendingIntent.FLAG_IMMUTABLE
+            )
+            usbManager.requestPermission(usbDevice, pendingIntent)
         }
     }
 
-}
 
-@Composable
-fun UsbItem(key:String,usbDevice: UsbDevice){
-
-    LazyColumn(Modifier.padding(start = 5.dp).fillMaxWidth().height(500.dp)) {
-      item {
-          Text(text = key)
-      }
-       items(usbDevice.interfaceCount){
-           val entity = usbDevice.getInterface(it)
-           UsbInterface(usbInterface = entity)
-
-       }
-
-
-    }
-
-}
-
-
-@Composable
-fun UsbInterface(usbInterface: UsbInterface){
-
-
-        LazyColumn(Modifier.padding(start = 5.dp).fillMaxWidth().height(300.dp)) {
-            item {
-                Text(text = usbInterface.name?:usbInterface.toString())
-            }
-            items(usbInterface.endpointCount){
-                val entity = usbInterface.getEndpoint(it)
-                com.example.hogotest.usb.UsbEndpoint(usbEndPoint = entity)
+    val devicePermissionReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val usbDevice = intent.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE)
+            if (usbDevice != null) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    openDevice(usbDevice)
+                }
             }
         }
 
 
-}
+    }
 
-@Composable
-fun UsbEndpoint(usbEndPoint: UsbEndpoint){
-    Column(Modifier.padding(start = 5.dp).fillMaxWidth().height(IntrinsicSize.Min)) {
-        Text(text = usbEndPoint.toString())
+    @Composable
+    fun UsbList(usbDevices: Map<String, UsbDevice>, onClickDevice: (usbDevice: UsbDevice) -> Unit) {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            usbDevices.forEach { entity ->
+                UsbItem(
+                    key = entity.key,
+                    usbDevice = entity.value,
+                    onClick = { onClickDevice(entity.value) }
+                )
+            }
+        }
 
+    }
+
+    @Composable
+    fun UsbItem(key: String, usbDevice: UsbDevice, onClick: () -> Unit = {}) {
+        Column(
+            Modifier
+                .padding(start = 5.dp)
+                .fillMaxWidth()
+                .clickable { onClick() }
+        )
+        {
+
+            Text(text = "The Device is $key")
+            for (i in 0 until usbDevice.interfaceCount) {
+                val entity = usbDevice.getInterface(i)
+                UsbInterface(usbInterface = entity)
+            }
+        }
+    }
+
+
+    @Composable
+    fun UsbInterface(usbInterface: UsbInterface) {
+
+
+        Column(
+            Modifier
+                .padding(start = 5.dp)
+                .fillMaxWidth()
+        ) {
+
+            Text(text = usbInterface.name ?: usbInterface.toString())
+            for (i in 0 until usbInterface.endpointCount) {
+                val entity = usbInterface.getEndpoint(i)
+                UsbEndpoint(usbEndPoint = entity)
+            }
+        }
+
+
+    }
+
+    @Composable
+    fun UsbEndpoint(usbEndPoint: UsbEndpoint) {
+        Column(
+            Modifier
+                .padding(start = 5.dp)
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+        ) {
+            Text(text = usbEndPoint.toString())
+
+        }
     }
 }
 
-class UsbViewModel():ViewModel(){
-    val usbDeviceList = mutableListOf<UsbDevice>()
-    fun addDevice(usbDevice: UsbDevice){
-        usbDeviceList.add(usbDevice)
-    }
-
-
-
-}
