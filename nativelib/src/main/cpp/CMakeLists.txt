@@ -26,6 +26,8 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         nativelib.cpp
         usb_test.cpp
+        mouse_common.cpp
+        mouse_async.cpp
 )
 
 # Searches for a specified prebuilt library and stores the path as a

@@ -1,25 +1,53 @@
 //
-// Created by miaoc on 2024/4/28.
+// Created by 苗成林 on 2024/5/4.
 //
 #include <jni.h>
-#include <string>
+#include <stdlib.h>
+#include <string.h>
 #include "libusb/libusb.h"
 #include <android/log.h>
 #include "mouse_common.cpp"
 
+struct usb_mouse {
+    struct libusb_device_handle *handle;
+    int interface;
+    int endpoint;
+    unsigned char buf[16];
+    int transferred;
+    struct libusb_transfer *transfer;
+    struct usb_mouse *next;
+};
+
+static struct usb_mouse *usb_mouse_list;
 
 
 
+void transfer_cb(struct libusb_transfer *transfer) {
+    static int count = 0;
+    if (transfer->status == LIBUSB_TRANSFER_COMPLETED)
+    {
+        /* parser data */
+        LOGD("%04d datas: ", count++);
+        for (int i = 0; i < transfer->actual_length; i++)
+        {
+            LOGD("%02x ", transfer->buffer[i]);
+        }
+        LOGD("\n");
 
+    }
 
+    if (int err =libusb_submit_transfer(transfer) < 0)
+    {
+        LOGD("libusb_submit_transfer err %d",err);
+    }
 
+}
 
-int runing = 1;
 
 extern "C"
-JNIEXPORT int JNICALL
-Java_com_example_nativelib_UsbLib_openDevice(JNIEnv *env, jobject thiz, jint vid, jint pid,
-                                             jint fd) {
+JNIEXPORT jint JNICALL
+Java_com_example_nativelib_UsbLib_openDeviceAsync(JNIEnv *env, jobject thiz, jint vid, jint pid,
+                                                  jint fd) {
 
     LOGD("test_libusb");
     libusb_context *ctx = NULL;
@@ -44,11 +72,11 @@ Java_com_example_nativelib_UsbLib_openDevice(JNIEnv *env, jobject thiz, jint vid
         LOGD("libusb_wrap_sys_device returned invalid handle\n");
         return r;
     }
-   struct libusb_device *dev = libusb_get_device(devh);
+    struct libusb_device *dev = libusb_get_device(devh);
 
     print_device(dev, devh);
     int err ;
-    int endpoint;
+    char endpoint;
     int interface_num = 0;
     int found = 0;
     int transferred;
@@ -83,7 +111,7 @@ Java_com_example_nativelib_UsbLib_openDevice(JNIEnv *env, jobject thiz, jint vid
                     LOGD("find in int endpoint %d",endpoint);
                     found = 1;
                     print_endpoint(&ep_desc);
-                    
+
                 }
             }
         }
@@ -98,20 +126,6 @@ Java_com_example_nativelib_UsbLib_openDevice(JNIEnv *env, jobject thiz, jint vid
         return -1;
     }
 
-//    if (found){
-//      err =   libusb_open(dev,&devh);
-//        if (err){
-//
-//            LOGD("failed to libusb_open--%d",err);
-//            release(devh, interface_num);
-//            return  err;
-//        }
-//    }
-   // libusb_free_device_list(&dev,1);
-
-    /* enable automatic attach/detach kernel driver on supported platforms in libusb */
-    //libusb_set_auto_detach_kernel_driver(devh, 1);
-   // print_device(dev, endpoint,interface_num);
     libusb_detach_kernel_driver(devh,interface_num);
 
     /* claim interface */
@@ -121,29 +135,18 @@ Java_com_example_nativelib_UsbLib_openDevice(JNIEnv *env, jobject thiz, jint vid
         return err;
     }
     LOGD("libusb_claim_interface ok %d",interface_num);
+    struct libusb_transfer *transfer = libusb_alloc_transfer(0);
 
-   /* while (1) {
-        err = libusb_interrupt_transfer(devh, endpoint, buffer, bufferLen, &transferred, 5000);
-        if (!err) {
-            *//* parser data *//*
-            LOGD("%04d count: ", count++);
-            LOGD("data: %s", buffer);
-        } else if (err == LIBUSB_ERROR_TIMEOUT) {
-            LOGD("libusb_interrupt_transfer timout\n");
-        } else {
-            LOGD("libusb_interrupt_transfer err : %d\n", err);
+    libusb_fill_interrupt_transfer(transfer,devh,endpoint,buffer,bufferLen,transfer_cb,NULL,1000);
+    while (1) {
+        struct timeval tv = { 5, 0 };
+        int r;
+
+        r = libusb_handle_events_timeout(ctx, &tv);
+        if (r < 0) {
+            LOGD( "libusb_handle_events_timeout err\n");
             break;
         }
     }
-    release(devh, interface_num);
-
-    return r;*/
-
-
-    return  r;
-
 }
-
-
-
 

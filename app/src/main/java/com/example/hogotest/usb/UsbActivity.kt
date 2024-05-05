@@ -11,6 +11,7 @@ import android.hardware.usb.UsbInterface
 import android.hardware.usb.UsbManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -19,10 +20,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.nativelib.UsbLib
 import com.hugo.mylibrary.components.BaseActivity
@@ -53,7 +56,7 @@ class UsbActivity : BaseActivity() {
     suspend fun openDevice(usbDevice: UsbDevice) {
         val connection = usbManager.openDevice(usbDevice)
         if (connection != null) {
-            usbLib.openDevice(
+            usbLib.openDeviceAsync(
                 usbDevice.vendorId,
                 usbDevice.productId,
                 connection.getFileDescriptor()
@@ -119,13 +122,12 @@ class UsbActivity : BaseActivity() {
     fun UsbItem(key: String, usbDevice: UsbDevice, onClick: () -> Unit = {}) {
         Column(
             Modifier
-                .padding(start = 5.dp)
                 .fillMaxWidth()
                 .clickable { onClick() }
         )
         {
 
-            Text(text = "The Device is $key")
+            Text(text = "The Device is $key",Modifier.background(color = Color.Gray))
             for (i in 0 until usbDevice.interfaceCount) {
                 val entity = usbDevice.getInterface(i)
                 UsbInterface(usbInterface = entity)
@@ -140,14 +142,15 @@ class UsbActivity : BaseActivity() {
 
         Column(
             Modifier
-                .padding(start = 5.dp)
+                .padding(start = 15.dp)
                 .fillMaxWidth()
         ) {
 
-            Text(text = usbInterface.name ?: usbInterface.toString())
+            Text(text = usbInterface.name ?: usbInterface.toString(),Modifier.background(color = Color.LightGray))
             for (i in 0 until usbInterface.endpointCount) {
                 val entity = usbInterface.getEndpoint(i)
                 UsbEndpoint(usbEndPoint = entity)
+                Divider(color = Color.Gray)
             }
         }
 
