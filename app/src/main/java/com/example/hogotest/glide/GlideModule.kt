@@ -34,6 +34,7 @@ class MyGlideModule : AppGlideModule() {
     override fun applyOptions(context: Context, builder: GlideBuilder) {
         builder.setSourceExecutor(GlideExecutor.newSourceExecutor())
 
+
         super.applyOptions(context, builder)
 
     }

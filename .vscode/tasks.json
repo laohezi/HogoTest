@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run: app debug",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-lc", "./gradlew :app:installDebug --no-daemon && node .vscode/android-run.js"],
+      "problemMatcher": []
+    },
+    {
+      "label": "debug: app (prepare JDWP)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-lc", ".vscode/android-start-debug.sh com.example.hogotest .MainActivity 8700"],
+      "problemMatcher": []
+    },
+    {
+      "label": "gradle: app assembleDebug",
+      "type": "shell",
+      "command": "./gradlew",
+      "args": [":app:assembleDebug", "--no-daemon"],
+      "group": "build",
+      "problemMatcher": "$gcc",
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "gradle: app installDebug",
+      "type": "shell",
+      "command": "./gradlew",
+      "args": [":app:installDebug", "--no-daemon"],
+      "group": "build",
+      "problemMatcher": "$gcc",
+      "options": { "cwd": "${workspaceFolder}" },
+      "dependsOn": ["gradle: app assembleDebug"]
+    }
+  ]
+}

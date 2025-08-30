@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+  "name": "Run (app)",
+  "type": "node",
+  "request": "launch",
+  "program": "${workspaceFolder}/.vscode/android-run.js",
+  "preLaunchTask": "gradle: app installDebug"
+    },
+    {
+  "name": "Debug (attach Java/Kotlin)",
+      "type": "java",
+      "request": "attach",
+  "preLaunchTask": "debug: app (prepare JDWP)",
+      "hostName": "localhost",
+      "port": 8700
+    },
+    {
+  "name": "Attach (native LLDB)",
+      "type": "cppdbg",
+      "request": "attach",
+      "program": "/system/bin/app_process64",
+      "processId": "${command:pickProcess}",
+      "MIMode": "lldb",
+      "setupCommands": [
+        { "text": "-enable-pretty-printing", "ignoreFailures": true }
+      ]
+    }
+  ]
+}

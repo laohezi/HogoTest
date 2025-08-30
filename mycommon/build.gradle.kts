@@ -1,24 +1,18 @@
-import com.example.bui.AndroidX
-import com.example.bui.Hilt
-import com.example.bui.Jdk
-import com.example.bui.Sdk
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    //add ksp plugin
 }
 
 android {
     namespace = "com.hugo.mylibrary"
-    compileSdk = Sdk.compileSdkVersion
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = Sdk.minSdkVersion
-        targetSdk = Sdk.targetSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,19 +28,24 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = Jdk.sourceCompatibility
-        targetCompatibility = Jdk.targetCompatibility
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = Jdk.kotlinJvmTarget
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        aidl = true
     }
 }
 
 dependencies {
-
-    api(com.example.bui.UtilsCode)
-    api(AndroidX.appcompat)
-    implementation(Hilt.hilt)
-    kapt(Hilt.compiler)
-
+    api(libs.utilcodex)
+    api(libs.androidx.appcompat)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    api(libs.koin.core)
+    api(libs.koin.android)
+    api(libs.koin.test)
 }

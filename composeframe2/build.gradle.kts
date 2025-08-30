@@ -1,23 +1,19 @@
-import com.example.bui.*
 plugins {
     id("com.android.application")
     id("kotlin-android")
 }
 
-
-
-
 android {
-    buildToolsVersion= Sdk.buildToolsVersion
-    compileSdk =Sdk.compileSdkVersion
+    buildToolsVersion = libs.versions.buildTools.get()
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "com.example.jetnews1"
-        minSdk= Sdk.minSdkVersion
-        targetSdk =Sdk.targetSdkVersion
-        versionCode =1
-        versionName ="1.0"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner= "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -29,21 +25,11 @@ android {
             keyAlias = "daye"
             keyPassword = "yoxisinei145"
         }
-
-//       create("release"){
-//           storeFile = file
-//           storePassword = "yoxisinei145"
-//           keyAlias = "daye"
-//           keyPassword = "yoxisinei145"
-//       }
-
     }
 
     buildTypes {
-
         debug {
             //signingConfig = signingConfigs.getByName("debug")
-
         }
 
         release {
@@ -53,12 +39,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility =Jdk.sourceCompatibility
-        targetCompatibility = Jdk.targetCompatibility
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = Jdk.kotlinJvmTarget
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -66,7 +52,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Compose.version
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packagingOptions {
         resources {
@@ -78,67 +64,38 @@ android {
 }
 
 dependencies {
-    val composeBom = platform(Compose.bom)
+    val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
-    implementation(Coroutines.android)
-    implementation(Compose.ui)
-    implementation (Compose.foundation)
-    implementation (Compose.material)
-    implementation (Compose.materialIconsExtended)
-    implementation (Compose.tooling)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.bundles.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.bundles.androidx.navigation)
+    implementation(libs.retrofit)
 
-    implementation(Compose.animation)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.bundles.androidx.test)
+    debugImplementation(libs.compose.ui.test.manifest)
 
-    implementation (Compose.runtime)
-    implementation (Compose.runtimeLivedata)
+    // Accompanist libraries
+    implementation("com.google.accompanist:accompanist-pager:+")
+    implementation("com.google.accompanist:accompanist-pager-indicators:+")
+    implementation("com.google.accompanist:accompanist-glide:+")
+    implementation("com.google.accompanist:accompanist-flowlayout:+")
 
-    implementation ("androidx.navigation:navigation-compose:2.4.0-beta02")
-
-
-
-    implementation ("androidx.activity:activity-ktx:1.3.1")
-    implementation ("androidx.core:core-ktx:1.7.0-alpha01")
-    //implementation ("androidx.activity:activity-compose:1.3.1")
-    implementation(AndroidX.Activity.activityCompose)
-
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.0")
-    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation ("androidx.window:window:1.0.0-beta03")
-    testImplementation("junit:junit:4.12")
-
-    androidTestImplementation ("androidx.test:rules:1.4.0")
-    androidTestImplementation ("androidx.test:runner:1.4.0")
-    //androidTestImplementation (Compose.uiTest)
-
-
-    debugImplementation (Compose.uiTestManifest)
-    //implementation "jp.wasabeef.composable:glide:1.0.1"
-
-    implementation ("com.google.accompanist:accompanist-pager:+")
-
-    // If using indicators, also depend on
-    implementation ("com.google.accompanist:accompanist-pager-indicators:+")
-    implementation ("com.google.accompanist:accompanist-glide:+")
-   // implementation "com.google.accompanist:accompanist-coil:+"
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02")
-    implementation ("com.squareup.retrofit2:retrofit:+")
-    implementation ("com.google.accompanist:accompanist-flowlayout:+")
-    implementation ("androidx.navigation:navigation-compose:+")
-    implementation ("androidx.navigation:navigation-fragment-ktx:+")
-    implementation ("androidx.navigation:navigation-ui-ktx:+")
-    implementation ("io.coil-kt:coil-compose:1.3.2")
-
-
+    // Other libraries
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.window:window:1.0.0-beta03")
+    implementation("io.coil-kt:coil-compose:1.3.2")
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
     kotlinOptions {
-        // Set JVM target to 1.8
-        jvmTarget = Jdk.kotlinJvmTarget
+        jvmTarget = "17"
     }
 }
 

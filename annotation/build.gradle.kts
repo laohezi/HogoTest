@@ -1,22 +1,14 @@
-import com.example.bui.Jdk
-import com.example.bui.Kotlin
-
 plugins {
     id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
-
-
 
 dependencies {
     implementation(gradleApi())
-    implementation(Kotlin.stdlib)
-    implementation (Kotlin.reflection)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflection)
     implementation("com.android.tools.build:gradle-api:8.2.1")
-
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
-  //  implementation ("com.google.devtools.ksp:symbol-processing-extensions:1.9.21-1.0.15")
-
+    implementation(libs.ksp.gradlePlugin)
 
     // ASM
     implementation("org.ow2.asm:asm:9.3")
@@ -24,6 +16,6 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = Jdk.sourceCompatibility
-    targetCompatibility = Jdk.targetCompatibility
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

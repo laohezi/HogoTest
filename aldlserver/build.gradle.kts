@@ -1,21 +1,15 @@
-import com.example.bui.AndroidX
-import com.example.bui.Jdk
-import com.example.bui.Material
-import com.example.bui.Sdk
-import com.example.bui.Test
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    compileSdk = Sdk.compileSdkVersion
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.com.example.aldlserver"
-        minSdk = Sdk.minSdkVersion
-        targetSdk = Sdk.targetSdkVersion
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -32,11 +26,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = Jdk.sourceCompatibility
-        targetCompatibility = Jdk.targetCompatibility
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = Jdk.kotlinJvmTarget
+        jvmTarget = "17"
     }
     namespace = "com.example.aldlserver"
 
@@ -46,11 +40,10 @@ android {
 }
 
 dependencies {
-
-    implementation(AndroidX.coreKtx)
-    implementation(AndroidX.appcompat)
-    implementation(Material.material)
-    implementation("androidx.test.ext:junit-ktx:1.1.5")
-    testImplementation(Test.junit)
-
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
 }
