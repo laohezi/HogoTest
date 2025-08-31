@@ -58,6 +58,7 @@
 
 
         </activity>
+        <activity android:name="com.example.hogotest.FileDescriptorTestActivity" />
 
 
         <!-- <activity android:name=".JavaActivity" />-->

@@ -34,7 +34,7 @@ android {
     }
    signingConfigs {
        val useHome = System.getProperty("user.home")
-       val file = File("$useHome/.android/daye.keystore")
+       val file = File("$useHome/zheteng/cert/daye.keystore")
       getByName("debug"){
            storeFile = file
            storePassword = "yoxisinei145"
@@ -96,6 +96,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
 
     implementation(libs.glide)
+    implementation(libs.androidx.material3.android)
 
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)

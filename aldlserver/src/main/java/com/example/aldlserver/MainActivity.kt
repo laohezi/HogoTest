@@ -10,9 +10,7 @@ class MainActivity:AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        val intent = Intent(this,PlayerService::class.java)
 
-        startService(intent)
         viewModelStore
 
     }

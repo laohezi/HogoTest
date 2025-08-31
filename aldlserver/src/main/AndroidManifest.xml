@@ -8,14 +8,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HogoTest" >
-        <service android:name="com.example.aldlserver.PlayerService"
-            android:exported="true"
+        <service
+            android:name=".FileDescriptorService"
             android:enabled="true"
-            >
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.example.aldlserver.PlayerService"/>
+                <action android:name="com.example.aldlserver.FileDescriptorService" />
             </intent-filter>
         </service>
+
         <activity android:name="com.example.aldlserver.MainActivity"
             android:exported="true">
             <intent-filter>
