@@ -48,4 +48,5 @@ dependencies {
     api(libs.koin.core)
     api(libs.koin.android)
     api(libs.koin.test)
+    implementation(libs.timber)
 }
