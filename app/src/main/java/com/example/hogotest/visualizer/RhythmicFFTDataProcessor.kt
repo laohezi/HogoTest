@@ -25,7 +25,7 @@ class RhythmicFFTDataProcessor : FFTDataProcessor {
     private val brightnessDecay = 0.92f // Controls how fast the light fades after a beat
     private val baseBrightness = 0.3f
 
-    override fun process(fft: ByteArray): VisualResult {
+    override fun process(fft: ByteArray): VisualizerData {
         val magnitudes = FloatArray(fft.size / 2)
         for (i in magnitudes.indices) {
             val real = fft[i * 2].toFloat()
@@ -44,7 +44,7 @@ class RhythmicFFTDataProcessor : FFTDataProcessor {
         val isMelodyBeat = detectBeat(melodyEnergy, melodyEnergyHistory, melodyHistorySize, melodyBeatThresholdMultiplier, melodyBeatCooldown, ::lastMelodyBeatTime) { time -> lastMelodyBeatTime = time }
 
         val (color, alpha) = calculateVisualResult(magnitudes, isBassBeat || isMelodyBeat)
-        return VisualResult(color, alpha)
+        return VisualizerData(color, alpha)
     }
 
     private fun detectBeat(

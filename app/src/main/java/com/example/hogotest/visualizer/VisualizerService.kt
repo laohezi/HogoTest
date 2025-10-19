@@ -17,6 +17,9 @@ import kotlinx.coroutines.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 import androidx.compose.ui.graphics.Color
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import org.koin.android.ext.android.inject
 
 private interface FftDataProvider {
     suspend fun start(visualizer: Visualizer, onFftData: (ByteArray) -> Unit)
@@ -76,14 +79,13 @@ private class PollingFftDataProvider(private val coroutineScope: CoroutineScope)
 class VisualizerService : Service() {
     private var visualizer: Visualizer? = null
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var fftProcessor: FFTDataProcessor = RhythmicFFTDataProcessor()
-
+    private val fftDataProcessorRepository by inject<FftProcessorRepository>()
+    private val visualizerRepository by inject<VisualizerRepository>()
 
     private val usePolling = false // true for polling, false for listener
     private var fftDataProvider: FftDataProvider? = null
 
     companion object {
-        var colorUpdateCallback: ((androidx.compose.ui.graphics.Color, Float) -> Unit)? = null
         val LOG_TAG = "VisualizerService"
         private const val NOTIFICATION_ID = 1
         private const val CHANNEL_ID = "VisualizerServiceChannel"
@@ -95,13 +97,6 @@ class VisualizerService : Service() {
             setupVisualizer(sessionId)
         }
 
-        override fun setFftProcessor(name: String?) {
-            name?.let {
-                FFTDataProcessorFactory.get(it)?.let { processor ->
-                    fftProcessor = processor
-                }
-            }
-        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -170,8 +165,8 @@ class VisualizerService : Service() {
     }
 
     private  fun processFFTData(fft: ByteArray) {
-        fftProcessor.process(fft)?.let { result ->
-            colorUpdateCallback?.invoke(result.color, result.alpha)
+        fftDataProcessorRepository.fftProcessor.process(fft)?.let { result ->
+            visualizerRepository.updateVisualizerData(result)
         }
 
     }

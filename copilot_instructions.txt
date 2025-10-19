@@ -1,5 +1,9 @@
 # 项目说明
 
+架构应该采用google的现代安卓架构指南（https://developer.android.com/jetpack/guide）中的最佳实践。
+依赖注入框架使用koin
+repo 中的数据应该尽量是
+
 ## 核心原则
 - 每次修改应尽可能小。
 - 尽可能复用现有的逻辑和模式。

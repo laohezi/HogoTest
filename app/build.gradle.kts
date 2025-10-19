@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -98,6 +97,11 @@ dependencies {
 
     implementation(libs.glide)
 
+    // Koin for Dependency Injection
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     implementation(libs.kotlinx.coroutines.android)
@@ -126,7 +130,4 @@ dependencies {
     implementation(libs.guava.android)
 
     implementation(project(":mycommon"))
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    implementation(project(":nativelib"))
 }

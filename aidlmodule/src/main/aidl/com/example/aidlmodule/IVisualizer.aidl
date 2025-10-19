@@ -9,5 +9,5 @@ interface IVisualizer {
      * @param sessionId The audio session ID from MediaPlayer
      */
     void updateMediaSessionId(int sessionId);
-    void setFftProcessor(String name);
+
 }

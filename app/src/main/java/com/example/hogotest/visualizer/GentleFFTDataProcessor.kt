@@ -25,7 +25,7 @@ class GentleFFTDataProcessor : FFTDataProcessor {
     private val brightnessDecay = 0.90f // Slower decay for a smoother effect
     private val baseBrightness = 0.4f
 
-    override fun process(fft: ByteArray): VisualResult {
+    override fun process(fft: ByteArray): VisualizerData {
         val magnitudes = FloatArray(fft.size / 2)
         for (i in magnitudes.indices) {
             val real = fft[i * 2].toFloat()
@@ -37,7 +37,7 @@ class GentleFFTDataProcessor : FFTDataProcessor {
         val isBeat = detectBeat(lowFreqEnergy)
 
         val (color, alpha) = calculateVisualResult(magnitudes, isBeat)
-        return VisualResult(color, alpha)
+        return VisualizerData(color, alpha)
     }
 
     private fun detectBeat(currentEnergy: Float): Boolean {

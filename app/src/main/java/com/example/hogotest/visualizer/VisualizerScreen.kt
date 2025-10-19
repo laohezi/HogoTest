@@ -17,18 +17,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun VisualizerScreen(viewModel: VisualizerViewModel = viewModel()) {
-    val color by viewModel.visualizerColor.collectAsState()
-    val alpha by viewModel.visualizerAlpha.collectAsState()
+fun VisualizerScreen(viewModel: VisualizerViewModel = koinViewModel()) {
+    val visualizerData by viewModel.visualizerData.collectAsState()
     val processorNames = viewModel.fftProcessorNames
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color.copy(alpha = alpha)),
+            .background(visualizerData.color.copy(alpha = visualizerData.alpha)),
     ) {
         Text(
             text = "Visualizer",

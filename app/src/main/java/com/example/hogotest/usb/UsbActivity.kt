@@ -27,18 +27,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.nativelib.UsbLib
+
 import com.hugo.mylibrary.components.BaseActivity
-import dagger.hilt.android.AndroidEntryPoint
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.HashMap
 
-@AndroidEntryPoint
+
 class UsbActivity : BaseActivity() {
     val actionUsbPermission = "com.example.hogotest.USB_PERMISSION"
-    val usbLib = UsbLib()
+
     val usbManager by lazy {
         getSystemService(USB_SERVICE) as UsbManager
     }
@@ -56,11 +56,7 @@ class UsbActivity : BaseActivity() {
     suspend fun openDevice(usbDevice: UsbDevice) {
         val connection = usbManager.openDevice(usbDevice)
         if (connection != null) {
-            usbLib.openDeviceAsync(
-                usbDevice.vendorId,
-                usbDevice.productId,
-                connection.getFileDescriptor()
-            )
+
         }
     }
 

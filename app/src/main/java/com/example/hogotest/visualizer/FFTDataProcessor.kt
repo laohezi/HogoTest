@@ -4,10 +4,10 @@ import androidx.compose.ui.graphics.Color
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-data class VisualResult(val color: Color, val alpha: Float)
+
 
 interface FFTDataProcessor {
-    fun process(fft: ByteArray): VisualResult?
+    fun process(fft: ByteArray): VisualizerData?
 }
 
 class DefaultFFTDataProcessor : FFTDataProcessor {
@@ -21,7 +21,7 @@ class DefaultFFTDataProcessor : FFTDataProcessor {
     private var beatBrightness = 0.5f
     private val brightnessDecay = 0.95f
 
-    override fun process(fft: ByteArray): VisualResult {
+    override fun process(fft: ByteArray): VisualizerData {
         val magnitudes = FloatArray(fft.size / 2)
         for (i in magnitudes.indices) {
             val real = fft[i * 2].toFloat()
@@ -34,7 +34,7 @@ class DefaultFFTDataProcessor : FFTDataProcessor {
 
         val avgMagnitude = magnitudes.average().toFloat()
         val (color, alpha) = calculateColorFromFFT(magnitudes, avgMagnitude, isBeat)
-        return VisualResult(color, alpha)
+        return VisualizerData(color, alpha)
     }
 
     private fun detectBeat(currentEnergy: Float): Boolean {
