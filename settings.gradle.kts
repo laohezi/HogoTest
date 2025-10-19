@@ -1,5 +1,15 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 include (":app")
 include (":composeframe2")
+include (":aidlmodule")
+include (":musicplayer")
 rootProject.name = "HogoTest"
 
 /*
@@ -10,7 +20,10 @@ evaluate(new File(
 ))*/
 
 dependencyResolutionManagement {
-
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 include("aldlserver")
 include(":nativelib")

@@ -89,6 +89,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":aidlmodule"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.appcompat)
@@ -102,6 +103,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.bundles.compose)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     debugImplementation(libs.leakcanary.android)
     implementation(libs.glide)

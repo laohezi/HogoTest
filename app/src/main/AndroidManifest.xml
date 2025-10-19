@@ -20,6 +20,11 @@
         tools:ignore="ProtectedPermissions" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <permission android:name="com.example.hogotest.permission.VISUALIZER"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".MyApp"
@@ -49,6 +54,7 @@
         <activity android:name="com.example.hogotest.room.RoomActivity" android:exported="true"/>
         <activity android:name="com.example.hogotest.PerformanceOptimization.ClickAnrTest" android:exported="true" />
         <activity android:name="com.example.hogotest.usage.UsageActivity" android:exported="true"/>
+        <activity android:name="com.example.hogotest.visualizer.VisualizerActivity" android:exported="true"/>
 
         <activity android:name="com.example.hogotest.usb.UsbActivity"
             android:exported="true">
@@ -58,6 +64,15 @@
 
 
         </activity>
+
+        <service android:name=".visualizer.VisualizerService"
+
+            android:exported="true"
+            android:permission="com.example.hogotest.permission.VISUALIZER">
+            <intent-filter>
+                <action android:name="com.example.hogotest.IVisualizer"/>
+            </intent-filter>
+        </service>
 
 
         <!-- <activity android:name=".JavaActivity" />-->

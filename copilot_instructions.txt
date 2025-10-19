@@ -1,0 +1,27 @@
+# 项目说明
+
+## 核心原则
+- 每次修改应尽可能小。
+- 尽可能复用现有的逻辑和模式。
+- 这是一个用于测试Android功能的项目，每个功能的实现都应该尽可能简单。
+
+## 架构: 音乐播放器与可视化工具
+- `musicplayer` 模块：仅负责通过URL播放音乐。
+- `app` 模块：包含一个 `visualizer`（可视化）模块。
+- **通信方式**: `musicplayer` 通过 `aidlmodule` 模块中的 `Ivisualizer.aidl` 接口与 `app` 模块通信。
+- **共享数据**: `musicplayer` 将 `sessionId` 共享给 `app` 模块。
+- **功能实现**: `app` 的 `visualizer` 模块根据接收到的 `sessionId` 来绘制音频的可视化效果（例如颜色变化）。
+
+# Project Instructions
+
+## Core Principles
+- Each modification should be as small as possible.
+- Reuse existing logic and patterns whenever possible.
+- This is a test project for Android features. Implementations should be simple and focused on the specific feature being tested.
+
+## Architecture: Music Player and Visualizer
+- The `musicplayer` module is responsible for playing music from a URL.
+- The `app` module contains a `visualizer` feature.
+- **Communication**: `musicplayer` communicates with the `app` module via the `Ivisualizer.aidl` interface, which is located in the `aidlmodule` module.
+- **Shared Data**: The `musicplayer` shares its audio `sessionId`.
+- **Functionality**: The `visualizer` module in the `app` uses this `sessionId` to draw audio visualizations (e.g., drawing colors).
