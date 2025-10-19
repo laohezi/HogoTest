@@ -4,15 +4,14 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.StateFlow
 
 class VisualizerViewModel(
-    private val visualizerRepository: VisualizerRepository,
-    private val fftProcessorRepository: FftProcessorRepository
+    private val visualizerRepository: VisualizerRepository
 ) : ViewModel() {
     val visualizerData: StateFlow<VisualizerData> = visualizerRepository.visualizerData
 
-    val fftProcessorNames: List<String> = fftProcessorRepository.fftProcessorNames
+    val fftProcessorNames: List<String> = visualizerRepository.fftProcessorNames
 
 
     fun setFftProcessor(name: String) {
-        fftProcessorRepository.setFftProcessor(name)
+        visualizerRepository.setFftProcessor(name)
     }
 }
